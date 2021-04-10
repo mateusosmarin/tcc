@@ -36,8 +36,8 @@ frequency_states = {
 amplitude_states = {
     'manual': {
         'butter': [],
-        'cheby1': ['Rpass', 'Rstop'],
-        'cheby2': ['Rpass', 'Rstop'],
+        'cheby1': ['Rpass'],
+        'cheby2': ['Rstop'],
         'ellip': ['Rpass', 'Rstop'],
         'bessel': [],
     },
@@ -120,12 +120,13 @@ class IIR(Gtk.VBox):
             btype = self.filter_type.value.lower()
             ftype = design_methods[self.design_method.value]
 
+            design_method = design_methods[self.design_method.value]
             options = {}
-            if design_methods[self.design_method.value] in ('cheby1', 'cheby2', 'ellip'):
-                options = {
-                    'rp': amplitude_specs['Rpass'],
-                    'rs': amplitude_specs['Rstop'],
-                }
+
+            if design_method in ('cheby1', 'ellip'):
+                options['rp'] = amplitude_specs['Rpass']
+            if design_method in ('cheby2', 'ellip'):
+                options['rs'] = amplitude_specs['Rstop']
 
             return {
                 'N': N,
