@@ -45,7 +45,7 @@ class FilterView(Gtk.VBox):
         self.amplitude_ax.clear()
         self.amplitude_ax.semilogx(w / (2 * np.pi), mag)
         self.amplitude_ax.set_xlabel('f [Hz]')
-        self.amplitude_ax.set_ylabel(r'$|H(e^{j 2 \pi f})|$ [dB]')
+        self.amplitude_ax.set_ylabel(r'$|H(e^{j 2 \pi f})|^2$ [dB]')
         self.amplitude_ax.grid(True)
 
         self.phase_ax.clear()
