@@ -3,8 +3,9 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy import signal
 
 from fdatool.utils import amplitude_units, frequency_units
 from fdatool.widgets.figures import FilterView
@@ -30,17 +31,17 @@ class Remez(Gtk.VBox):
     def __init__(self):
         Gtk.VBox.__init__(self, spacing=4)
 
-        self.filter_type = LabeledComboBoxText(label='Filter type', options=frequency_states.keys())
+        self.response_type = LabeledComboBoxText(label='Response type', options=frequency_states.keys())
         self.filter_order = LabeledEntry(label='Number of taps', parse=int)
-        self.frequency_specs = FrequencySpecs(state=self.filter_type.value, states=frequency_states)
-        self.amplitude_specs = AmplitudeSpecs(state=self.filter_type.value, states=amplitude_states)
+        self.frequency_specs = FrequencySpecs(state=self.response_type.value, states=frequency_states)
+        self.amplitude_specs = AmplitudeSpecs(state=self.response_type.value, states=amplitude_states)
 
-        @self.filter_type.changed.register
-        def set_frequency_specs_state(filter_type):
-            self.frequency_specs.state = filter_type
-            self.amplitude_specs.state = filter_type
+        @self.response_type.changed.register
+        def set_frequency_specs_state(response_type):
+            self.frequency_specs.state = response_type
+            self.amplitude_specs.state = response_type
 
-        self.pack_start(self.filter_type, expand=False, fill=True, padding=0)
+        self.pack_start(self.response_type, expand=False, fill=True, padding=0)
         self.pack_start(self.filter_order, expand=False, fill=True, padding=0)
         self.pack_start(self.frequency_specs, expand=False, fill=True, padding=0)
         self.pack_start(self.amplitude_specs, expand=False, fill=True, padding=0)
@@ -85,12 +86,14 @@ class Remez(Gtk.VBox):
         return coeffs, den
 
 if __name__ == '__main__':
-    from scipy import signal
-
     window = Gtk.Window()
     window.connect('destroy', Gtk.main_quit)
 
+    specs_label = Gtk.Label()
+    specs_label.set_markup('<b>Filter specifications</b>')
+
     remez = Remez()
+
     design_button = Gtk.Button(label='Design')
 
     filter_view = FilterView()
@@ -109,11 +112,13 @@ if __name__ == '__main__':
     design_button.connect('clicked', on_clicked_design)
 
     vbox = Gtk.VBox(spacing=4, margin=4)
+    vbox.pack_start(specs_label, expand=False, fill=True, padding=10)
     vbox.pack_start(remez, expand=False, fill=True, padding=0)
     vbox.pack_start(design_button, expand=False, fill=True, padding=0)
 
     hbox = Gtk.HBox(spacing=4, margin=4)
     hbox.pack_start(vbox, expand=False, fill=True, padding=0)
+    hbox.pack_start(Gtk.VSeparator(), expand=False, fill=True, padding=4)
     hbox.pack_start(filter_view, expand=True, fill=True, padding=0)
 
     window.add(hbox)

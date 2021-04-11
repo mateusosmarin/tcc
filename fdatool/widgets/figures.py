@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 
 class FilterView(Gtk.VBox):
     def __init__(self):
-        Gtk.VBox.__init__(self, spacing=4)
+        Gtk.VBox.__init__(self, spacing=4, margin=4)
 
         self.figure = Figure(tight_layout=True)
 
@@ -64,6 +64,7 @@ class FilterView(Gtk.VBox):
         self.zpk_ax.set_ylabel(r'$Im\{z\}$')
         self.zpk_ax.legend()
         self.zpk_ax.grid(True)
+        self.zpk_ax.set_aspect(1)
 
         t, h = self.system.impulse()
         self.impulse_ax.clear()

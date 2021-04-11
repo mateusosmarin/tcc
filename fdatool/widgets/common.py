@@ -43,7 +43,7 @@ class FilterOrder(Gtk.HBox):
             self.order.entry.set_text('')
             self.order.entry.set_sensitive(not self.minimum.value)
 
-        self.pack_start(self.order, expand=False, fill=True, padding=0)
+        self.pack_start(self.order, expand=True, fill=False, padding=0)
         self.pack_start(self.minimum, expand=False, fill=True, padding=0)
 
     @property
