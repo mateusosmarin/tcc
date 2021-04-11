@@ -38,6 +38,17 @@ class FilterWidget(Gtk.VBox):
         self.show_all()
 
 
+def show_error_dialog(msg):
+    dialog = Gtk.MessageDialog(
+        flags=0,
+        message_type=Gtk.MessageType.ERROR,
+        buttons=Gtk.ButtonsType.OK,
+        text=str(msg)
+    )
+    dialog.run()
+    dialog.destroy()
+
+
 if __name__ == '__main__':
     window = Gtk.Window()
     window.connect('destroy', Gtk.main_quit)
@@ -57,15 +68,21 @@ if __name__ == '__main__':
 
     def on_clicked_design(*args):
         designer = filter_widget.designer
-        params = designer.params
-        print(params)
 
-        dt = 1 / params['fs']
+        try:
+            params = designer.params
+            print(params)
 
-        system = designer.design(params)
-        system = signal.dlti(*system, dt=dt)
+            dt = 1 / params['fs']
 
-        filter_view.system = system
+            system = designer.design(params)
+            system = signal.dlti(*system, dt=dt)
+
+            filter_view.system = system
+
+        except Exception as e:
+            show_error_dialog(e)
+            raise e
 
     design_button.connect('clicked', on_clicked_design)
 
