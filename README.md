@@ -2,7 +2,7 @@
 
 ```bash
 # Clone this repository
-$ git clone <https://github.com/mateusosmarin/tcc.git>
+$ git clone https://github.com/mateusosmarin/tcc.git
 $ cd tcc
 ```
 
