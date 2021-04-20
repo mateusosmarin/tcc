@@ -66,11 +66,13 @@ class FilterView(Gtk.VBox):
         self.zpk_ax.grid(True)
         self.zpk_ax.set_aspect(1)
 
-        t, h = self.system.impulse()
+        n, h = self.system.impulse()
         self.impulse_ax.clear()
-        self.impulse_ax.plot(t, np.squeeze(h))
-        self.impulse_ax.set_xlabel('t [s]')
-        self.impulse_ax.set_ylabel('h(t) [V]')
+        markerlines, stemlines, baseline = self.impulse_ax.stem(n, np.squeeze(h))
+        markerlines.set_markersize(3)
+        stemlines.set_linewidth(1)
+        self.impulse_ax.set_xlabel('n [samples]')
+        self.impulse_ax.set_ylabel('h[n] [V]')
         self.impulse_ax.grid(True)
 
         self.figure.canvas.draw()
