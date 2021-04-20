@@ -35,6 +35,24 @@ class Remez(Gtk.VBox):
         self.filter_order = LabeledEntry(label='Number of taps', parse=int)
         self.frequency_specs = FrequencySpecs(state=self.response_type.value, states=frequency_states)
         self.amplitude_specs = AmplitudeSpecs(state=self.response_type.value, states=amplitude_states)
+        self.description = Gtk.Frame(label="Description")
+        text = Gtk.Label(label='''Design the finite impulse response
+(FIR) filter whose transfer function
+minimizes the maximum error between
+the desired gain and the realized gain
+in the specified frequency bands using
+the Remez exchange algorithm.
+
+Notes:
+The amplitude specifications are
+meant to be gain specifications
+(e.g., a 20 dB attenuation is
+specified as -20 dB).''')
+
+        scroll = Gtk.ScrolledWindow()
+        scroll.add(text)
+        self.description.add(scroll)
+
 
         @self.response_type.changed.register
         def set_frequency_specs_state(response_type):
@@ -45,6 +63,7 @@ class Remez(Gtk.VBox):
         self.pack_start(self.filter_order, expand=False, fill=True, padding=0)
         self.pack_start(self.frequency_specs, expand=False, fill=True, padding=0)
         self.pack_start(self.amplitude_specs, expand=False, fill=True, padding=0)
+        self.pack_start(self.description, expand=True, fill=True, padding=0)
 
     @property
     def params(self):

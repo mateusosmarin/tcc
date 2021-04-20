@@ -61,6 +61,23 @@ class IIR(Gtk.VBox):
         self.filter_order = FilterOrder()
         self.frequency_specs = FrequencySpecs(state=self.response_type.value, states=frequency_states['minimum'])
         self.amplitude_specs = AmplitudeSpecs(state=filter_types[self.filter_type.value], states=amplitude_states['minimum'])
+        self.description = Gtk.Frame(label="Description")
+        text = Gtk.Label(label='''Design an infinite impulse response (IIR)
+filter.
+
+Notes:
+The amplitude specifications, when
+requested, are meant to be given as:
+Gpass: the maximum loss in the passband,
+Gstop: the minimum attenuation in the
+stopband,
+Rpass: the maximum ripple in the passband,
+Rstop: the minimum attenuation in the
+stopband.''')
+
+        scroll = Gtk.ScrolledWindow()
+        scroll.add(text)
+        self.description.add(scroll)
 
         @self.response_type.changed.register
         def set_frequency_specs_state(response_type):
@@ -98,6 +115,7 @@ class IIR(Gtk.VBox):
         self.pack_start(self.filter_order, expand=False, fill=True, padding=0)
         self.pack_start(self.frequency_specs, expand=False, fill=True, padding=0)
         self.pack_start(self.amplitude_specs, expand=False, fill=True, padding=0)
+        self.pack_start(self.description, expand=True, fill=True, padding=0)
 
     @property
     def params(self):

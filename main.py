@@ -33,7 +33,7 @@ class FilterWidget(Gtk.VBox):
         self.clear()
 
         self.designer = factory.build(state)
-        self.pack_start(self.designer, expand=False, fill=True, padding=0)
+        self.pack_start(self.designer, expand=True, fill=True, padding=0)
 
         self.show_all()
 
