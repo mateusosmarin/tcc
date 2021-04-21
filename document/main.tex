@@ -12,6 +12,7 @@
 \usepackage{biblatex}
 \usepackage{csquotes}
 \addbibresource{bibliography.bib}
+\usepackage{caption}
 
 \newcommand{\I}{{\mathrm{i}\mkern1mu}}
 \newcommand{\euler}{{\mathrm{e}\mkern1mu}}
@@ -75,6 +76,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{continuous}
     \label{fig:continuous}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   Um sinal discreto no tempo, por outro lado, é definido como uma sequência numérica:
@@ -94,6 +96,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{discrete}
     \label{fig:discrete}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   Dentre os sinais existentes, o impulso unitário ou delta de Dirac, é um dos mais importantes. Este sinal é
@@ -157,6 +160,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{fourier_series}
     \label{fig:fourier}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   Para funções não-periódicas, generaliza-se a série de Fourier considerando o período como sendo infinito.
@@ -176,6 +180,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{fourier_transform}
     \label{fig:fourier_transform}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   Ao amostrar um sinal com um período de amostragem $T$ por meio de um pente de Dirac
@@ -210,6 +215,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{discrete_time_fourier_transform}
     \label{fig:discrete_time_fourier_transform}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
   Nesse caso, a discretização acontece no domínio do tempo, mas a frequência ainda é contínua. Discretizando a
   transformada de tempo discreto de Fourier para $N$ amostras de um ciclo, obtém-se:
@@ -232,6 +238,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{discrete_fourier_transform}
     \label{fig:discrete_fourier_transform}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   A transformada de Fourier pode ainda ser generalizada ao se considerar uma frequência complexa. O resultado
@@ -250,6 +257,7 @@
     \centering
     \includegraphics[width=0.75\textwidth]{laplace_transform}
     \label{fig:laplace_transform}
+    \caption*{Fonte: Autoria própria}
   \end{figure}
 
   Nota-se também que a transformada de Laplace pode ser vista como sendo a transformada de Fourier de
