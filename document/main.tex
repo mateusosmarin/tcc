@@ -136,36 +136,11 @@
     \sum_{n = -\infty}^{+\infty} x[n] \delta[n-n_0] = x[n_0]
   \end{equation}
 
-\section{Convolução}
-  Dados dois sinais, é possível realizar um conjunto de operações sobre os mesmos. Dentre estas, tem-se as bem
-  conhecidas operações de soma, subtração, multiplicação, divisão, derivação e integração. Em processamento
-  de sinais, uma operação conhecida como convolução é muito utilizada, sendo definida por:
-  \begin{equation}
-    (f \ast g)(t) = \int_{-\infty}^{+\infty} f(\tau) g(t - \tau) d\tau
-  \end{equation}
-  para o caso contínuo e
-  \begin{equation}
-    (f \ast g)[n] = \sum_{k = -\infty}^{+\infty} f[k] g[n - k]
-  \end{equation}
-  para o caso discreto.
-
-  Uma propriedade importante da convolução é
-  \begin{equation}
-    x(t) \ast \delta(t) = \int_{-\infty}^{+\infty} x(\tau) \delta(t - \tau) d\tau = x(t)
-  \end{equation}
-  para o caso contínuo e
-  \begin{equation}
-    x[n] \ast \delta[n] = \sum_{k = -\infty}^{+\infty} x[k] \delta[n - k] = x[n]
-  \end{equation}
-  para o caso discreto. Esta propriedade exprime o fato de que o impulso unitário corresponde a uma função
-  identidade para a convolução.
-  
 \section{Transformadas de Fourier, Laplace e Z}
   Até aqui, os sinais foram descritos no domínio do tempo. É possível, no entanto, representar sinais no
-  domínio da frequência através das transformações integrais conhecidas como transformada de Fourier,
-  transformada de Laplace e transformada Z. O princípio de partida é a série de Fourier, que possibilita
-  a representação de uma função T-periódica como uma série de senos e cossenos ou, equivalentemente,
-  exponenciais complexas.
+  domínio da frequência através das transformações conhecidas como transformada de Fourier, transformada de
+  Laplace e transformada Z. O princípio de partida é a série de Fourier, que possibilita a representação de uma
+  função T-periódica como uma série de senos e cossenos ou, equivalentemente, exponenciais complexas.
 
   A série de Fourier é definida como:
   \begin{equation}
@@ -187,7 +162,7 @@
   Para funções não-periódicas, generaliza-se a série de Fourier considerando o período como sendo infinito.
   No caso limite, tem-se:
   \begin{equation}
-    x(t) = \int_{-\infty}^{+\infty} \widehat{x}(f) \euler^{\I 2 \pi f t} dt
+    x(t) = \int_{-\infty}^{+\infty} \widehat{x}(f) \euler^{\I 2 \pi f t} df
   \end{equation}
   onde
   \begin{equation}
@@ -278,7 +253,7 @@
   \end{figure}
 
   Nota-se também que a transformada de Laplace pode ser vista como sendo a transformada de Fourier de
-  $x(t) \euler^{-\sigma t}$. Para recuperar o sinal original, a transformada Inversa de Laplace é:
+  $x(t) \euler^{-\sigma t}$. Para recuperar o sinal original, a transformada de Laplace inversa é:
   \begin{equation}
     x(t) = \mathcal{L}^{-1}\{X(s)\}(t) = \frac{1}{\I 2 \pi} \lim_{T \rightarrow \infty}
     \int_{\gamma - \I T}^{\gamma + \I T} X(s) \euler^{s t} ds
@@ -296,16 +271,135 @@
   \end{equation}
   da qual, ao tomar $z = \euler^{s T}$, obtém-se a transformada Z de um sinal discreto:
   \begin{equation}
-    X(z) = \sum_{n = -\infty}^{+\infty} x[n] z^{-n}, z \in \mathbb{C}
+    X(z) = \mathcal{Z}\{x[n]\}(z) = \sum_{n = -\infty}^{+\infty} x[n] z^{-n}, z \in \mathbb{C}
   \end{equation}
 
-  Para recuperar o sinal original, a transformada Inversa Z é:
+  Para recuperar o sinal original, a transformada Z inversa é:
   \begin{equation}
     x[n] = \mathcal{Z}^{-1}\{X(z)\}[n] = \frac{1}{\I 2 \pi} \oint_{\mathcal{C}} X(z) z^{n - 1} dz
   \end{equation}
   onde $\mathcal{C}$ é um caminho fechado percorrido no sentido anti-horário, contendo a origem e inteiramente
   na região de convergência de $X(z)$.
+
+\section{Convolução}
+  Dados dois sinais, é possível realizar um conjunto de operações sobre os mesmos. Dentre estas, tem-se as bem
+  conhecidas operações de soma, subtração, multiplicação, divisão, derivação e integração. Em processamento
+  de sinais, uma operação conhecida como convolução é muito utilizada, sendo definida por:
+  \begin{equation}
+    (f \ast g)(t) = \int_{-\infty}^{+\infty} f(\tau) g(t - \tau) d\tau
+  \end{equation}
+  para o caso contínuo e
+  \begin{equation}
+    (f \ast g)[n] = \sum_{k = -\infty}^{+\infty} f[k] g[n - k]
+  \end{equation}
+  para o caso discreto.
+
+  Uma propriedade importante da convolução é
+  \begin{equation}
+    \label{eq:continuous_convolution_identity}
+    x(t) \ast \delta(t) = \int_{-\infty}^{+\infty} x(\tau) \delta(t - \tau) d\tau = x(t)
+  \end{equation}
+  para o caso contínuo e
+  \begin{equation}
+    \label{eq:discrete_convolution_identity}
+    x[n] \ast \delta[n] = \sum_{k = -\infty}^{+\infty} x[k] \delta[n - k] = x[n]
+  \end{equation}
+  para o caso discreto. Esta propriedade exprime o fato de que o impulso unitário corresponde a uma identidade
+  para a convolução.
+
+  Ainda, outra propriedade importante da convolução está em sua relação com as transformadas de Fourier, Laplace
+  e Z. Tomando a transformada de Laplace como exemplo, tem-se:
+  \begin{equation}
+    \label{eq:convolution_theorem}
+    \begin{split}
+      \mathcal{L}\{(f \ast g)(t)\}(s) = &\quad \int_{t = -\infty}^{+\infty} \left[\int_{\tau = -\infty}^{+\infty}
+      f(\tau) g(t - \tau) d\tau\right] \euler^{-s t} dt
+      \\ = &\quad \int_{\tau = -\infty}^{+\infty} \int_{t = -\infty}^{+\infty}
+      f(\tau) g(t - \tau) \euler^{-s t} dt d\tau
+      \\ = &\quad \int_{\tau = -\infty}^{+\infty} f(\tau) \int_{t = -\infty}^{+\infty}
+      g(t - \tau) \euler^{-s t} dt d\tau
+      \\ = &\quad \int_{\tau = -\infty}^{+\infty} f(\tau) \int_{u = -\infty}^{+\infty}
+      g(u) \euler^{-s(u+\tau)} du d\tau
+      \\ = &\quad \int_{\tau = -\infty}^{+\infty} f(\tau) \euler^{-s \tau} d\tau
+      \int_{u = -\infty}^{+\infty} g(u) \euler^{-s u} du
+      \\ = &\quad \mathcal{L}\{f(t)\}(s) \mathcal{L}\{g(t)\}(s)
+    \end{split}
+  \end{equation}
+  ou seja, no domínio da frequência a operação de convolução corresponde à multiplicação. A equação
+  \ref{eq:convolution_theorem} é conhecida como teorema do convolução.
+
 \section{Sistemas lineares e invariantes no tempo}
+  Um sistema é essencialmente algo que mapeia um sinal de entrada em um sinal de saída, ou seja:
+  \begin{equation}
+    y(t) = \mathcal{H}\{x(t)\}
+  \end{equation}
+  para um sistema analógico e
+  \begin{equation}
+    y[n] = \mathcal{H}\{x[n]\}
+  \end{equation}
+  para um sistema discreto, onde $\mathcal{H}\{\cdot\}$ denota o sistema.
+
+  Dentre todos os sistemas possíveis, tem-se classes de sistemas que são interessantes pelas propriedades que
+  apresentam. Um sistema linear é um sistema que tem a propriedade:
+  \begin{equation}
+    \mathcal{H}\{a x_1(t) + b x_2(t)\} = a \mathcal{H}\{x_1(t)\} + b \mathcal{H}\{x_2(t)\}
+  \end{equation}
+  para o caso contínuo e
+  \begin{equation}
+    \mathcal{H}\{a x_1[n] + b x_2[n]\} = a \mathcal{H}\{x_1[n]\} + b \mathcal{H}\{x_2[n]\}
+  \end{equation}
+  para o caso discreto. Sistemas com essa propriedade tem a característica de, por exemplo, ao se dobrar a
+  amplitude da entrada, dobrar-se também a amplitude da saída.
+
+  Um sistema invariante no tempo é um sistema que tem a propriedade:
+  \begin{equation}
+    \mathcal{H}\{x(t)\} = y(t) \Leftrightarrow \mathcal{H}\{x(t - t_0)\} = y(t - t_0)
+  \end{equation}
+  para o caso contínuo e
+  \begin{equation}
+    \mathcal{H}\{x[n]\} = y[n] \Leftrightarrow \mathcal{H}\{x[n - n_0]\} = y[n - n_0]
+  \end{equation}
+  para o caso discreto. Sistemas com essa propriedade tem a característica de ao se atrasar a entrada, atrasar-se
+  também a saída pela mesma quantidade.
+
+  Sistemas que são lineares e invariantes no tempo podem ser tratados matemáticamente de forma generalizada como
+  se segue. Sendo $\mathcal{H}\{\cdot\}$ um sistema linear e invariante no tempo, e como, de acordo com as
+  equações \ref{eq:continuous_convolution_identity} e \ref{eq:discrete_convolution_identity}, sinais podem ser
+  representados por uma convolução com o impulso unitário, tem-se
+  \begin{equation}
+    \label{eq:continuous_system_convolution}
+    \begin{split}
+      y(t) = &\quad \mathcal{H}\{x(t) \ast \delta(t)\}
+      = \mathcal{H}\{\int_{-\infty}^{+\infty} x(\tau) \delta(t - \tau) d\tau\}
+      \\ = &\quad \int_{-\infty}^{+\infty} x(\tau) \mathcal{H}\{\delta(t - \tau)\} d\tau
+      \\ = &\quad \int_{-\infty}^{+\infty} x(\tau) h(t - \tau) d\tau
+      \\ = &\quad x(t) \ast h(t)
+    \end{split}
+  \end{equation}
+  para o caso contínuo e
+  \begin{equation}
+    \label{eq:discrete_system_convolution}
+    \begin{split}
+      y[n] = &\quad \mathcal{H}\{x[n] \ast \delta[n]\}
+      = \mathcal{H}\{\sum_{k = -\infty}^{+\infty} x[k] \delta[n - k]\}
+      \\ = &\quad \sum_{k = -\infty}^{+\infty} x[k] \mathcal{H}\{\delta[n - k]\}
+      \\ = &\quad \sum_{k = -\infty}^{+\infty} x[k] h[n - k]
+      \\ = &\quad x[n] \ast h[n]
+  \end{split}
+  \end{equation}
+  para o caso discreto. Nas equações \ref{eq:continuous_system_convolution} e
+  \ref{eq:discrete_system_convolution}, $h(t)$ e $h[n]$ representam a resposta do sistema a um impulso unitário.
+  Assim, um sistema linear e invariante no tempo pode ser descrito totalmente por sua resposta ao impulso.
+
+  No domínio da frequência, o teorema da convolução \ref{eq:convolution_theorem} fornece:
+  \begin{equation}
+    Y(s) = \mathcal{L}\{x(t) \ast h(t)\} = X(s) H(s)
+  \end{equation}
+  para um sistema analógico e
+  \begin{equation}
+    Y(z) = \mathcal{Z}\{x[n] \ast h[n]\} = X(z) H(z)
+  \end{equation}
+  para um sistema discreto. Chama-se $H(s)$ e $H(z)$ a função de transferência do sistema $\mathcal{H\{\cdot}\}$.
 \section{Filtros digitais}
 \chapter{Resultados}
 \chapter{Considerações finais}
