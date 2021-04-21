@@ -337,7 +337,7 @@
   \ref{eq:convolution_theorem} é conhecida como teorema do convolução.
 
 \section{Sistemas lineares e invariantes no tempo}
-  Um sistema é essencialmente algo que mapeia um sinal de entrada em um sinal de saída, ou seja:
+  Um sistema é essencialmente algo que mapeia um sinal de entrada em um sinal de saída \cite{diniz}, ou seja:
   \begin{equation}
     y(t) = \mathcal{H}\{x(t)\}
   \end{equation}
@@ -409,6 +409,40 @@
   \end{equation}
   para um sistema discreto. Chama-se $H(s)$ e $H(z)$ a função de transferência do sistema $\mathcal{H\{\cdot}\}$.
 \section{Filtros digitais}
+  Em geral, um filtro digital é um sistema discreto. Neste trabalho serão abordados filtros digitais lineares e
+  invariantes no tempo.
+
+  Filtros não-recursivos são caracterizados por uma equação de diferenças do tipo:
+  \begin{equation}
+    y[n] = \sum_{k = 0}^{M} b_k x[n - k]
+  \end{equation}
+  onde os coeficientes $b_k$ estão diretamente relacionados a resposta ao impulso do sistema, ou seja,
+  $b_k = h[k]$. Aplicando a transformada Z, tem-se que a função de transferência do sistema é dada por:
+  \begin{equation}
+    H(z) = \frac{Y(z)}{X(z)} = \sum_{k = 0}^{M} b_k z^{-k}
+  \end{equation}
+  Devido ao fato de a resposta ao impulso deste sistema ser de duração finita, filtros não-recursivos são também
+  conhecidos como filtros de resposta ao impulso finito (FIR, do inglês \textit{finite impulse response}).
+
+  Filtros recursivos, por outro lado, são caracterizados por uma equação de diferenças do tipo:
+  \begin{equation}
+    y[n] = \sum_{k = 0}^{M} b_k x[n - k] - \sum_{k = 1}^{N} a_k y[n - k]
+  \end{equation}
+  Aplicando a transformada Z, tem-se
+  \begin{equation}
+    Y(z) = \sum_{k = 0}^{M} b_k X(z) z^{-k} - \sum_{k = 1}^{N} a_k Y(z) z^{-k}
+  \end{equation}
+  de onde, ao se rearranjar, obtem-se
+  \begin{equation}
+    Y(z) \left( 1 + \sum_{k = 1}^{N} a_k z^{-k} \right) = X(z) \left( \sum_{k = 0}^{M} b_k z^{-k} \right)
+  \end{equation}
+  ou seja,
+  \begin{equation}
+    H(z) = \frac{Y(z)}{X(z)} = \frac{\sum_{k = 0}^{M} b_k z^{-k}}{1 + \sum_{k = 1}^{N} a_k z^{-k}}
+  \end{equation}
+  é a função de transferência do sistema. Filtros recursivos, pelo fato de que a saída do sistema depende de
+  saídas passadas, apresentam uma resposta ao impulso de duração infinita, dessa forma são também conhecidos como
+  filtros de resposta ao impulso infinito (IIR, do inglês \textit{infinite impulse response}).
 \chapter{Resultados}
 \chapter{Considerações finais}
 \printbibliography
