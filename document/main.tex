@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
 \usepackage{hyphenat}
+\usepackage{indentfirst}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -13,6 +14,7 @@
 \usepackage{csquotes}
 \addbibresource{bibliography.bib}
 \usepackage{caption}
+\usepackage[hidelinks]{hyperref}
 
 \newcommand{\I}{{\mathrm{i}\mkern1mu}}
 \newcommand{\euler}{{\mathrm{e}\mkern1mu}}
@@ -409,14 +411,14 @@
   \end{equation}
   para um sistema discreto. Chama-se $H(s)$ e $H(z)$ a função de transferência do sistema $\mathcal{H\{\cdot}\}$.
 \section{Filtros digitais}
-  Em geral, um filtro digital é um sistema discreto. Neste trabalho serão abordados filtros digitais lineares e
-  invariantes no tempo.
+  Em geral, um filtro digital é um sistema discreto cujo objetivo é destacar ou reduzir determinadas
+  características de um sinal. Neste trabalho serão abordados filtros digitais lineares e invariantes no tempo.
 
   Filtros não-recursivos são caracterizados por uma equação de diferenças do tipo:
   \begin{equation}
     y[n] = \sum_{k = 0}^{M} b_k x[n - k]
   \end{equation}
-  onde os coeficientes $b_k$ estão diretamente relacionados a resposta ao impulso do sistema, ou seja,
+  onde os coeficientes $b_k$ estão diretamente relacionados à resposta ao impulso do sistema, ou seja,
   $b_k = h[k]$. Aplicando a transformada Z, tem-se que a função de transferência do sistema é dada por:
   \begin{equation}
     H(z) = \frac{Y(z)}{X(z)} = \sum_{k = 0}^{M} b_k z^{-k}
@@ -443,7 +445,206 @@
   é a função de transferência do sistema. Filtros recursivos, pelo fato de que a saída do sistema depende de
   saídas passadas, apresentam uma resposta ao impulso de duração infinita, dessa forma são também conhecidos como
   filtros de resposta ao impulso infinito (IIR, do inglês \textit{infinite impulse response}).
+
+  Neste trabalho serão abordados projetos de filtros digitais por métodos de otimização como
+  \textit{Least Squares} \cite{selesnick}, o algoritmo de Remez \cite{mcclellan_parks} e a transformação bilinear
+  \cite{diniz} aplicada aos clássicos filtros de Butterworth, Chebyshev, Cauer e Bessel.
 \chapter{Resultados}
+  O principal objetivo deste trabalho foi o desenvolvimento de uma aplicação com interface gráfica para projeto
+  de filtros digitais. Neste capítulo, serão apresentados detalhes sobre a elaboração do software, bem como será
+  tratado sobre sua forma de uso, incluindo exemplos.
+
+  A ferramenta foi desenvolvida em Python 3, utilizando as bibliotecas GTK para interface gráfica, NumPy para
+  computação numérica eficiente, SciPy para projeto dos filtros e Matplotlib para visualização de dados.
+  O código foi escrito totalmente pelo autor, de forma modular, facilitando modificações e a inclusão de novas
+  funcionalidades, estando disponível publicamente no Github \cite{source_code}. Instruções de instalação estão
+  inclusas no README do repositório.
+
+  O programa foi estruturado na seguinte hierarquia:
+  \begin{itemize}
+    \item main.py, é o módulo principal responsável por montar toda a aplicação
+    \item fdatool/utils.py, apresenta utilitários para conversão entre diferentes unidades de medida de
+      frequência (Hz, kHz, MHz e GHz) e amplitude (dB, V e W), bem como uma classe representado eventos que podem
+      ocorrer durante a execução do programa, permitindo o registro de callbacks
+    \item fdatool/widgets/inputs.py, constrói os componentes de entrada de dados da aplicação, adicionando
+      controle de estado aos mesmos
+    \item fdatool/widgets/specs.py, trata dos componentes de especificações de frequência e amplitude
+    \item fdatool/widgets/common.py, contém componentes gŕaficos recorrentes como botões e componente para
+      seleção de ordem dos filtros
+    \item fdatool/widgets/figures.py, onde são construídos os gráficos da aplicação
+    \item fdatool/filters/firls.py, este módulo implementa os filtros FIR utilizando o método Least Squares
+    \item fdatool/filters/remez.py, cuja função é o projeto de filtros FIR pelo algoritmo de Remez
+    \item fdatool/filters/iir.py, contém os filtros clássicos que são discretizados pela transformação bilinear
+    \item fdatool/filters/factory.py, permite a obtenção de um dos métodos de projeto por meio de uma fábrica
+      \cite{gang_of_four}
+  \end{itemize}
+
+  A tela inicial do programa é mostrada na figura \ref{fig:home}. O sistema consiste de duas seções: as
+  especificações do filtro a ser projetado e os gráficos que mostram os resultados do processo.
+  \begin{figure}[H]
+    \caption{Tela inicial da ferramenta desenvolvida}
+    \centering
+    \includegraphics[width=\textwidth]{images/home}
+    \label{fig:home}
+    \caption*{Fonte: Autoria própria}
+  \end{figure}
+
+  A utilização do sistema começa pela escolha de um método de projeto, sendo que cada método possui
+  características próprias e até mesmo a interface do sistema muda de acordo para acomodar cada metodologia.
+  Ainda, cada método conta com uma breve descrição de seu funcionamento e observações a respeito da forma de
+  utilização. Os método de projeto de filtros FIR utilizando o Least Squares e o algoritmo de Remez apresentam
+  uma descrição bastante semelhante, porém diferem quanto ao seu princípio de funcionamento: enquanto o Least
+  Squares realiza o projeto a partir da minimização do erro quadrático médio \cite{selesnick}, o algoritmo de
+  Remez minimiza o erro máximo \cite{mcclellan_parks}.
+
+  Em seguida, faz-se necessária a escolha de um tipo de resposta para o filtro: passa-baixas, passa-altas,
+  passa-faixa ou rejeita-faixa. Dependendo do tipo selecionado, serão exibidas entradas correspondentes para a
+  correta descrição do filtro desejado. Na sequência, deve-se então fazer a especificação em frequência e em
+  amplitude, de acordo com as unidades escolhidas.
+
+  A partir de todas as especificações, ao clicar no botão Design, o filtro será projetado e os resultados
+  exibidos nos quatro gráficos que apresentam a resposta em frequência (amplitude e fase), polos e zeros da
+  função de transferência e a resposta ao impulso do sistema. Com um filtro projetado também é habilitada uma
+  opção para exportação do filtro utilizando Pickle \cite{pickle}, que permite serializar um objeto do Python
+  em um arquivo que pode ser posteriormente carregado e usado em qualquer aplicação Python.
+
+\section{Exemplos}
+  Nesta seção será tratado o desenvolvimento de alguns filtros utilizando a ferramenta construída. Os filtros
+  terão frequência de amostragem de 44.1 kHz, frequência típica de áudio digital com qualidade de CD.
+
+\subsection{FIR - Least Squares}
+  Para desenvolver um filtro passa-baixas com 55 taps (coeficientes) cuja banda passante vai até 8 kHz, tendo
+  ganho unitário (0 dB), e a banda rejeitada iniciando em 9 kHz, com atenuação de 20 dB (um ganho de -20 dB), a
+  especificação do filtro seria como mostra a figura \ref{fig:least_squares_specifications}.
+  \begin{figure}[H]
+    \caption{Especificação de um filtro passa-baixas usando Least Squares}
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/least_squares_specifications}
+    \label{fig:least_squares_specifications}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+  
+  Os resultados obtidos para estas especificações podem ser visualizados na figura
+  \ref{fig:least_squares_results}
+  \begin{figure}[H]
+    \caption{Resultados do filtro passa-baixas utilizando Least Squares}
+    \centering
+    \includegraphics[width=\textwidth]{images/least_squares_results}
+    \label{fig:least_squares_results}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Exportando o filtro e aplicando-o a um tom de 5 kHz e um de 10kHz, pode-se observar o efeito da filtragem na
+  figura \ref{fig:least_squares_tones}.
+  \begin{figure}[H]
+    \caption{Aplicação do filtro passa-baixas a dois tons}
+    \centering
+    \includegraphics[width=\textwidth]{images/least_squares_tones}
+    \label{fig:least_squares_tones}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+\subsection{FIR - Algoritmo de Remez}
+  Supondo que se deseje projetar um filtro passa-faixa com 55 taps, cuja banda passante vai de 5 kHz a 15 kHz,
+  com ganho unitário (0 dB), e bandas rejeitadas com 1 kHz de transição e atenuações de 20 dB (ganho de -20 dB),
+  então a especificação do filtro deve ser feita de acordo com a figura \ref{fig:remez_specifications}.
+  \begin{figure}[H]
+    \caption{Especificação de um filtro passa-faixa usando o algoritmo de Remez}
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/remez_specifications}
+    \label{fig:remez_specifications}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Para este filtro, os resultados obtidos podem ser vistos na figura \ref{fig:remez_results}.
+  \begin{figure}[H]
+    \caption{Resultados do filtro passa-faixa utilizando o algoritmo de Remez}
+    \centering
+    \includegraphics[width=\textwidth]{images/remez_results}
+    \label{fig:remez_results}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  A aplicação do filtro obtido a tons de 2 kHz, 10 kHz e 18 kHz resulta na figura \ref{fig:remez_tones}.
+  \begin{figure}[H]
+    \caption{Aplicação do filtro passa-faixa a três tons}
+    \centering
+    \includegraphics[width=\textwidth]{images/remez_tones}
+    \label{fig:remez_tones}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+\subsection{IIR}
+  Para os filtros IIR, existe a possibilidade de projetar o filtro de acordo com especificações bem definidas
+  em relação a resposta desejada bem como de definir a ordem do filtro diretamente. Ao especificar um filtro de
+  ordem mínima, será construído um filtro com a mínima ordem necessária para atingir as especificações.
+
+  No caso de um filtro passa-altas Butterworth de ordem 10 com frequência de corte de 8 kHz, a descrição do 
+  filtro seria feita como na figura \ref{fig:butter_specifications}.
+  \begin{figure}[H]
+    \caption{Especificação de um filtro passa-altas de Butterworth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/butter_specifications}
+    \label{fig:butter_specifications}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  O filtro projetado apresenta as características exibidas na figura \ref{fig:butter_results}.
+  \begin{figure}[H]
+    \caption{Resultados do filtro passa-altas de Butterworth}
+    \centering
+    \includegraphics[width=\textwidth]{images/butter_results}
+    \label{fig:butter_results}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Utilizando o filtro para processar um tom de 4 kHz e um de 12 kHz, obtem-se os resultados mostrados na figura
+  \ref{fig:butter_tones}.
+  \begin{figure}[H]
+    \caption{Aplicação do filtro passa-altas a dois tons}
+    \centering
+    \includegraphics[width=\textwidth]{images/butter_tones}
+    \label{fig:butter_tones}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Já para um filtro rejeita-faixa de ordem mínima cuja banda rejeitada vai de 4 kHz a 8 kHz, com 500 Hz de faixa
+  de transição, uma atenuação de 20 dB na banda rejeitada e atenuação máxima de 3 dB na banda passante, as
+  especificações seriam como na figura \ref{fig:cauer_specifications}.
+  \begin{figure}[H]
+    \caption{Especificação de um filtro rejeita-faixa de Cauer}
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/cauer_specifications}
+    \label{fig:cauer_specifications}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Os resultados obtidos para este filtro podem ser vistos na figura \ref{fig:cauer_results}.
+  \begin{figure}[H]
+    \caption{Resultados do filtro rejeita-faixa de Cauer}
+    \centering
+    \includegraphics[width=\textwidth]{images/cauer_results}
+    \label{fig:cauer_results}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+
+  Aplicando o filtro desenvolvido a tons de 2 kHz, 6 kHz e 10 kHz, obtém-se a figura \ref{fig:cauer_tones}.
+  \begin{figure}[H]
+    \caption{Aplicação do filtro rejeita-faixa a três tons}
+    \centering
+    \includegraphics[width=\textwidth]{images/cauer_tones}
+    \label{fig:cauer_tones}
+    \caption*{Fonte: Autoria Própria}
+  \end{figure}
+  
 \chapter{Considerações finais}
+  O programa desenvolvido neste trabalho é capaz de realizar o projeto de filtros digitais segundo métodos
+  clássicos da literatura, podendo ser expandido a novos métodos. Ainda assim, possíveis melhorias foram
+  identificadas para trabalhos futuros. Uma funcionalidade interessante seria a possibilidade de, na própria
+  aplicação, fazer a entrada de um sinal para realizar o processamento com o filtro projetado, pois atualmente
+  só é possível exportar o filtro para um arquivo a ser utilizado posteriormente. Sobre o formato de exportação,
+  também podem ser implementados novos formatos, como CSV, JSON e até mesmo o formato de arquivos do MATLAB.
+  Ainda, devido a natureza também didática da ferramenta desenvolvida, o feedback de alunos a respeito de sua
+  utilização pode no futuro apontar para melhorias de layout que tornem a plataforma mais intuitiva.
 \printbibliography
 \end{document}

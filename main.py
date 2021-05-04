@@ -3,6 +3,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+import pickle
 import fdatool.filters.factory as factory
 from fdatool.widgets.inputs import LabeledComboBoxText
 from fdatool.widgets.figures import FilterView
@@ -66,6 +67,9 @@ if __name__ == '__main__':
 
     design_button = Gtk.Button(label='Design')
 
+    export_button = Gtk.Button(label='Export')
+    export_button.show()
+
     def on_clicked_design(*args):
         designer = filter_widget.designer
 
@@ -80,11 +84,42 @@ if __name__ == '__main__':
 
             filter_view.system = system
 
+            if export_button not in vbox.get_children():
+                vbox.pack_start(export_button, expand=False, fill=True, padding=0)
+
         except Exception as e:
+            if export_button in vbox.get_children():
+                vbox.remove(export_button)
             show_error_dialog(e)
             raise e
 
     design_button.connect('clicked', on_clicked_design)
+
+    def on_export_filter(*args):
+        dialog = Gtk.FileChooserDialog(
+            title='Save filter',
+            parent=window,
+            action=Gtk.FileChooserAction.SAVE,
+        )
+        dialog.add_buttons(
+            Gtk.STOCK_CANCEL,
+            Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_SAVE,
+            Gtk.ResponseType.OK,
+        )
+        dialog.set_current_name('untitled.pickle')
+
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            filename = dialog.get_filename()
+
+            with open(filename, 'wb') as f:
+                pickle.dump(filter_view.system, f)
+
+        dialog.destroy()
+
+    export_button.connect('clicked', on_export_filter)
 
     filter_view = FilterView()
 
