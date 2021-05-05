@@ -229,6 +229,10 @@ Orientador(a)\\[2.41cm]
   \clearpage
 }
 
+\thispagestyle{empty}
+\clearpage
+\onehalfspacing
+
 \chapter{Introdução}
   A disciplina de processamento de sinais é uma área ampla que permite entender e tratar matematicamente
   sinais, transformando-os segundo as necessidades envolvidas na sua aplicação. Majoritariamente, encontra-se
@@ -280,7 +284,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
     x = x(t), t \in \mathbb{R}
   \end{equation}
   A figura \ref{fig:continuous} mostra um exemplo de sinal contínuo no tempo.
-  \begin{figure}
+  \begin{figure}[H]
     \caption{Sinal contínuo no tempo}
     \centering
     \includegraphics[width=0.75\textwidth]{continuous}
@@ -300,7 +304,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \end{equation}
   onde $x_d$ é a versão discretizada do sinal analógico $x_a$ e $T_s$ representa o período de amostragem.
   A figura \ref{fig:discrete} mostra o sinal da figura \ref{fig:continuous} discretizado.
-  \begin{figure}
+  \begin{figure}[H]
     \caption{Sinal discreto no tempo}
     \centering
     \includegraphics[width=0.75\textwidth]{discrete}
@@ -701,7 +705,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \end{itemize}
 
   O software foi escrito levando em consideração padrões de projeto \cite{gang_of_four} como \textit{decorator},
-  \textit{observer}, \textit{state}, \textit{factory method}, sendo adaptados pelo autor de modo a harmonizar
+  \textit{observer}, \textit{state} e \textit{factory method}, sendo adaptados pelo autor de modo a harmonizar
   com o ecossistema Python.
 
 \chapter{Resultados}
