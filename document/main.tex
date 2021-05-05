@@ -2,7 +2,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[brazilian]{babel}
+\usepackage[english,brazil]{babel}
 \usepackage{hyphenat}
 \usepackage{indentfirst}
 \usepackage{amssymb}
@@ -10,22 +10,187 @@
 \usepackage{graphicx}
 \usepackage{float}
 \graphicspath{ {images/} }
-\usepackage{biblatex}
+\usepackage[backend=biber]{biblatex}
 \usepackage{csquotes}
 \addbibresource{bibliography.bib}
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
+\usepackage{tocloft}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage[left=3cm,top=3cm,right=2cm,bottom=2cm]{geometry}
+\usepackage{fancyhdr}
+	\pagestyle{fancy}
+	\pagestyle{fancyplain}
+	\fancyhf{}
+	\rhead{\footnotesize{\thepage}} 
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+\usepackage{bookmark}
+\usepackage[bottom]{footmisc}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{setspace} 
+\usepackage{epigraph}
 
 \newcommand{\I}{{\mathrm{i}\mkern1mu}}
 \newcommand{\euler}{{\mathrm{e}\mkern1mu}}
 
 \title{Desenvolvimento de uma plataforma interativa de processamento de sinais}
 \author{Mateus Fuga Osmarin}
-\date{\today}
+\date{2021-05-07}
 
 \begin{document}
-\maketitle
-\tableofcontents
+
+\pdfbookmark[1]{CAPA}{CAPA}
+\begin{minipage}{0.2\linewidth}
+  \centering
+  \includegraphics[scale=0.3]{images/uem}
+\end{minipage}
+\begin{minipage}{0.79\linewidth}
+  {
+    \centering
+    \doublespacing
+    \bf
+     
+    UNIVERSIDADE ESTADUAL DE MARINGÁ\\
+    DEPARTAMENTO DE ENGENHARIA QUÍMICA\\
+    ENGENHARIA ELÉTRICA\\
+  }
+\end{minipage}\\[4.54cm]
+
+\center
+{
+  \bf
+  \onehalfspacing
+  MATEUS FUGA OSMARIN\\[4.54cm]
+
+  DESENVOLVIMENTO DE UMA PLATAFORMA INTERATIVA DE PROCESSAMENTO DE SINAIS\\[4.54cm]
+
+
+  TRABALHO DE CONCLUSÃO DE CURSO\\[4.54cm]
+
+
+  {
+    \bf
+    MARINGÁ\\
+    2021
+  }
+}
+\thispagestyle{empty}
+\clearpage
+
+
+\pdfbookmark[1]{FOLHA DE ROSTO}{FOLHA DE ROSTO}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/uem_escrito}\\[2.978cm]
+\end{figure}
+{
+  \bf
+  {
+    MATEUS FUGA OSMARIN\\[2.978cm]
+
+    DESENVOLVIMENTO DE UMA PLATAFORMA INTERATIVA DE PROCESSAMENTO DE SINAIS
+  }\\[2.978cm]
+}
+
+\begin{minipage}{0.49\linewidth}
+  \includegraphics[scale=0.01]{images/branco} 
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+{
+  \justifying 
+  Trabalho de Conclusão de Curso apresentado ao Departamento de Engenharia Química da Universidade Estadual de
+  Maringá, como requisito parcial para a obtenção do título de Engenheiro Eletricista.
+}\\
+\end{minipage}\\[2.978cm]
+
+{
+  \center
+  Orientador: Prof. Dr. Rafael Krummenauer\\[2.978cm]
+
+  {
+    \bf
+    Maringá\\
+    2021
+  }
+}
+
+\thispagestyle{empty}
+\clearpage
+
+\pdfbookmark[1]{FOLHA DE APROVAÇÃO}{FOLHA DE APROVACAO}
+\center
+
+MATEUS FUGA OSMARIN\\[1.86cm]
+
+\textbf{DESENVOLVIMENTO DE UMA PLATAFORMA INTERATIVA DE PROCESSAMENTO DE SINAIS}\\[1.86cm]
+
+
+\begin{minipage}{0.49\linewidth}
+\includegraphics[scale=0.01]{images/branco} 
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+  {
+    \justifying 
+    Relatório final apresentado à Universidade Estadual de Maringá como parte das exigências para a obtenção do
+    título de Engenheiro Eletricista.
+  }\\[1.86cm]
+
+  Maringá, 07 de maio de 2021.\\[1.86cm]
+\end{minipage}
+
+{
+  \center BANCA EXAMINADORA\\[2.41cm]
+}
+
+
+
+\rule [0cm]{10cm}{0.1pt}\\
+Prof. Dr. Rafael Krummenauer\\
+Orientador(a)\\[2.41cm]
+
+\thispagestyle{empty}
+\clearpage
+
+\pdfbookmark[1]{DEDICATÓRIA}{DEDICATORIA}
+\begin{minipage}{0.9\linewidth}
+  \includegraphics[scale=0.01]{images/branco} 
+\end{minipage}\\[21cm]
+
+\begin{minipage}{0.59\linewidth}
+  \includegraphics[scale=0.01]{images/branco} 
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+
+\end{minipage}\\[18cm]
+
+
+\thispagestyle{empty}
+\clearpage
+
+\pdfbookmark[1]{AGRADECIMENTOS}{AGRADECIMENTOS}
+{
+  \center \Large \bf AGRADECIMENTOS
+}\\[1cm]
+
+\justifying
+
+
+
+\thispagestyle{empty}
+\clearpage
+
+\pdfbookmark[1]{EPÍGRAFE}{EPIGRAFE}
+\begin{minipage}{0.49\linewidth}
+  \includegraphics[scale=0.01]{images/branco} 
+\end{minipage}\\[18cm]
+
+\thispagestyle{empty}
+\clearpage
+
+\pdfbookmark[1]{RESUMO}{RESUMO}
 \begin{abstract}
   Este trabalho trata do desenvolvimento de uma plataforma interativa de processamento de sinais.
   A partir de uma interface gráfica, é possível realizar o projeto de filtros digitais tanto do tipo
@@ -35,6 +200,35 @@
 
   \textbf{Palavras-chave}: Processamento de sinais. Projeto de filtros digitais. Visualização. Python.
 \end{abstract}
+
+\pdfbookmark[1]{ABSTRACT}{ABSTRACT}
+\begin{otherlanguage}{english}
+  \begin{abstract}
+    This paper addresses the development of an interactive signal processing platform. By means of a graphical
+    user interface, it is possible to design both IIR and FIR filters, using classic techniques. The system
+    aims to deal with the visualization issues in the learning of signal processing topic, being an alternative
+    didatic tool.
+
+    \textbf{Keywords}: Signal processing. Digital filter design. Visualization. Python.
+  \end{abstract}
+\end{otherlanguage}
+
+{
+  \pdfbookmark[1]{LISTA DE FIGURAS}{LISTA DE FIGURAS}
+  \center
+  \listoffigures
+  \pagestyle{empty}
+  \clearpage
+}
+
+{
+  \pdfbookmark[1]{SUMÁRIO}{SUMARIO}
+  \center
+  \tableofcontents
+  \thispagestyle{empty}
+  \clearpage
+}
+
 \chapter{Introdução}
   A disciplina de processamento de sinais é uma área ampla que permite entender e tratar matematicamente
   sinais, transformando-os segundo as necessidades envolvidas na sua aplicação. Majoritariamente, encontra-se
@@ -43,17 +237,18 @@
   como é o caso do preço de uma ação, as temperaturas máxima e mínima diárias de uma cidade ou o número diário
   de novos casos de COVID-19. Entretanto, é importante ressaltar que mesmo sinais de natureza contínua  podem
   ser tratados de forma discreta por meio de procedimentos de amostragem adequados. Dessa forma, o processamento
-  digital de sinais é uma técnica que pode ser aplicada a uma infinidade de casos.
+  digital de sinais pode ser aplicado a uma infinidade de casos.
 
   Diante da generalidade envolvida, tem-se também um nível de abstração elevado no formalismo matemático que
   fundamenta a disciplina, o que resulta em dificuldades no aprendizado dessa importante área. Nesse sentido,
-  a utilização de ferramentas como a FDATool do MATLAB traz benefícios tanto de produtividade para profissionais
-  da área como facilitam o aprendizado para estudantes do tópico, por abordar de forma visual e intuitiva o
-  projeto de filtros digitais. Utilizando esse tipo de ferramenta, pode-se variar parâmetros de projeto e
-  visualizar o comportamento dos sistemas projetados de forma eficiente e facilitada, com gráficos que exibem
-  as principais características do processo. Contudo, o MATLAB se trata de um software pago e, não obstante,
-  tem-se observado um aumento crescente no interesse pela linguagem de programação Python por estudantes e
-  profissionais da área, dada a grande quantidade de bibliotecas disponíveis para todo tipo de problemas.
+  a utilização de ferramentas como o Filter Designer do MATLAB traz benefícios tanto de produtividade para
+  profissionais da área como facilitam o aprendizado para estudantes do tópico, por abordar de forma visual e
+  intuitiva o projeto de filtros digitais. Utilizando esse tipo de ferramenta, pode-se variar parâmetros de
+  projeto e visualizar o comportamento dos sistemas projetados de forma eficiente e facilitada, com gráficos que
+  exibem as principais características do processo. Contudo, o MATLAB se trata de um software pago e, não
+  obstante, tem-se observado um aumento crescente no interesse pela linguagem de programação Python por
+  estudantes e profissionais da área da ciência e tecnologia, dada a grande quantidade de bibliotecas disponíveis
+  para todo tipo de problemas.
 
   Dessa forma, o presente trabalho tem como objetivo o desenvolvimento de um software livre para projeto de
   filtros digitais utilizando a linguagem de programação Python, construindo uma interface gráfica amigável em
@@ -449,35 +644,46 @@
   Neste trabalho serão abordados projetos de filtros digitais por métodos de otimização como
   \textit{Least Squares} \cite{selesnick}, o algoritmo de Remez \cite{mcclellan_parks} e a transformação bilinear
   \cite{diniz} aplicada aos clássicos filtros de Butterworth, Chebyshev, Cauer e Bessel.
-\chapter{Resultados}
+\chapter{Metodologia}
   O principal objetivo deste trabalho foi o desenvolvimento de uma aplicação com interface gráfica para projeto
-  de filtros digitais. Neste capítulo, serão apresentados detalhes sobre a elaboração do software, bem como será
-  tratado sobre sua forma de uso, incluindo exemplos.
+  de filtros digitais. Neste capítulo, serão apresentados detalhes sobre a elaboração do software.
 
-  A ferramenta foi desenvolvida em Python 3, utilizando as bibliotecas GTK para interface gráfica, NumPy para
-  computação numérica eficiente, SciPy para projeto dos filtros e Matplotlib para visualização de dados.
+  A ferramenta foi desenvolvida em Python 3 \cite{python}, utilizando as bibliotecas GTK \cite{gtk} \cite{pygtk},
+  para interface gráfica, NumPy \cite{numpy} para computação numérica eficiente, SciPy \cite{scipy} para projeto
+  dos filtros e Matplotlib \cite{matplotlib} para visualização de dados.
   O código foi escrito totalmente pelo autor, de forma modular, facilitando modificações e a inclusão de novas
   funcionalidades, estando disponível publicamente no Github \cite{source_code}. Instruções de instalação estão
   inclusas no README do repositório.
 
   O programa foi estruturado na seguinte hierarquia:
   \begin{itemize}
-    \item main.py, é o módulo principal responsável por montar toda a aplicação
-    \item fdatool/utils.py, apresenta utilitários para conversão entre diferentes unidades de medida de
+    \item \texttt{main.py}, é o módulo principal responsável por montar toda a aplicação,
+    \item \texttt{fdatool/utils.py}, apresenta utilitários para conversão entre diferentes unidades de medida de
       frequência (Hz, kHz, MHz e GHz) e amplitude (dB, V e W), bem como uma classe representado eventos que podem
-      ocorrer durante a execução do programa, permitindo o registro de callbacks
-    \item fdatool/widgets/inputs.py, constrói os componentes de entrada de dados da aplicação, adicionando
-      controle de estado aos mesmos
-    \item fdatool/widgets/specs.py, trata dos componentes de especificações de frequência e amplitude
-    \item fdatool/widgets/common.py, contém componentes gŕaficos recorrentes como botões e componente para
-      seleção de ordem dos filtros
-    \item fdatool/widgets/figures.py, onde são construídos os gráficos da aplicação
-    \item fdatool/filters/firls.py, este módulo implementa os filtros FIR utilizando o método Least Squares
-    \item fdatool/filters/remez.py, cuja função é o projeto de filtros FIR pelo algoritmo de Remez
-    \item fdatool/filters/iir.py, contém os filtros clássicos que são discretizados pela transformação bilinear
-    \item fdatool/filters/factory.py, permite a obtenção de um dos métodos de projeto por meio de uma fábrica
-      \cite{gang_of_four}
+      ocorrer durante a execução do programa, permitindo o registro de callbacks,
+    \item \texttt{fdatool/widgets/inputs.py}, constrói os componentes de entrada de dados da aplicação,
+      adicionando controle de estado aos mesmos,
+    \item \texttt{fdatool/widgets/specs.py}, trata dos componentes de especificações de frequência e amplitude,
+    \item \texttt{fdatool/widgets/common.py}, contém componentes gŕaficos recorrentes como botões e componente
+      para seleção de ordem dos filtros,
+    \item \texttt{fdatool/widgets/figures.py}, onde são construídos os gráficos da aplicação,
+    \item \texttt{fdatool/filters/firls.py}, este módulo implementa os filtros FIR utilizando o método Least
+      Squares,
+    \item \texttt{fdatool/filters/remez.py}, cuja função é o projeto de filtros FIR pelo algoritmo de Remez,
+    \item \texttt{fdatool/filters/iir.py}, contém os filtros clássicos que são discretizados pela transformação
+      bilinear,
+    \item \texttt{fdatool/filters/factory.py}, permite a obtenção de um dos métodos de projeto por meio de uma
+      fábrica \cite{gang_of_four}.
   \end{itemize}
+
+  O software foi escrito levando em consideração padrões de projeto \cite{gang_of_four} como \textit{decorator},
+  \textit{observer}, \textit{state}, \textit{factory method}, sendo adaptados pelo autor de modo a harmonizar
+  com o ecossistema Python.
+
+\chapter{Resultados}
+  Neste capítulo será apresentada a aplicação desenvolvida, bem como sua forma de uso. Ainda, será realizado o
+  projeto de alguns filtros utilizando a ferramenta construída. Os filtros terão frequência de amostragem de
+  44.1 kHz, frequência típica de áudio digital com qualidade de CD.
 
   A tela inicial do programa é mostrada na figura \ref{fig:home}. O sistema consiste de duas seções: as
   especificações do filtro a ser projetado e os gráficos que mostram os resultados do processo.
@@ -502,17 +708,18 @@
   correta descrição do filtro desejado. Na sequência, deve-se então fazer a especificação em frequência e em
   amplitude, de acordo com as unidades escolhidas.
 
-  A partir de todas as especificações, ao clicar no botão Design, o filtro será projetado e os resultados
-  exibidos nos quatro gráficos que apresentam a resposta em frequência (amplitude e fase), polos e zeros da
-  função de transferência e a resposta ao impulso do sistema. Com um filtro projetado também é habilitada uma
-  opção para exportação do filtro utilizando Pickle \cite{pickle}, que permite serializar um objeto do Python
-  em um arquivo que pode ser posteriormente carregado e usado em qualquer aplicação Python.
+  A partir de todas as especificações, ao clicar no botão \textit{Design}, o filtro será projetado e os
+  resultados exibidos nos quatro gráficos que apresentam a resposta em frequência (amplitude e fase), polos e
+  zeros da função de transferência e a resposta ao impulso do sistema.
 
-\section{Exemplos}
-  Nesta seção será tratado o desenvolvimento de alguns filtros utilizando a ferramenta construída. Os filtros
-  terão frequência de amostragem de 44.1 kHz, frequência típica de áudio digital com qualidade de CD.
+  Com um filtro projetado também é habilitada uma opção para exportação do filtro utilizando Pickle
+  \cite{pickle}, que permite serializar um objeto do Python em um arquivo que pode ser posteriormente carregado
+  e usado em qualquer aplicação Python. O objeto exportado trata-se de uma instância da classe scipy.signal.dlti
+  \cite{scipy}, o que permite a filtragem de sinais e obtenção das diversas características do filtro, tais como
+  sua função de transferência, resposta em frequência, resposta ao impulso e até mesmo a filtragem de um sinal
+  arbitrário.
 
-\subsection{FIR - Least Squares}
+\section{Filtros FIR pelo método Least Squares}
   Para desenvolver um filtro passa-baixas com 55 taps (coeficientes) cuja banda passante vai até 8 kHz, tendo
   ganho unitário (0 dB), e a banda rejeitada iniciando em 9 kHz, com atenuação de 20 dB (um ganho de -20 dB), a
   especificação do filtro seria como mostra a figura \ref{fig:least_squares_specifications}.
@@ -544,7 +751,7 @@
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-\subsection{FIR - Algoritmo de Remez}
+\section{Filtros FIR pelo algoritmo de Remez}
   Supondo que se deseje projetar um filtro passa-faixa com 55 taps, cuja banda passante vai de 5 kHz a 15 kHz,
   com ganho unitário (0 dB), e bandas rejeitadas com 1 kHz de transição e atenuações de 20 dB (ganho de -20 dB),
   então a especificação do filtro deve ser feita de acordo com a figura \ref{fig:remez_specifications}.
@@ -574,7 +781,7 @@
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-\subsection{IIR}
+\section{Filtros IIR}
   Para os filtros IIR, existe a possibilidade de projetar o filtro de acordo com especificações bem definidas
   em relação a resposta desejada bem como de definir a ordem do filtro diretamente. Ao especificar um filtro de
   ordem mínima, será construído um filtro com a mínima ordem necessária para atingir as especificações.
@@ -637,14 +844,37 @@
     \caption*{Fonte: Autoria Própria}
   \end{figure}
   
-\chapter{Considerações finais}
-  O programa desenvolvido neste trabalho é capaz de realizar o projeto de filtros digitais segundo métodos
-  clássicos da literatura, podendo ser expandido a novos métodos. Ainda assim, possíveis melhorias foram
-  identificadas para trabalhos futuros. Uma funcionalidade interessante seria a possibilidade de, na própria
-  aplicação, fazer a entrada de um sinal para realizar o processamento com o filtro projetado, pois atualmente
-  só é possível exportar o filtro para um arquivo a ser utilizado posteriormente. Sobre o formato de exportação,
-  também podem ser implementados novos formatos, como CSV, JSON e até mesmo o formato de arquivos do MATLAB.
-  Ainda, devido a natureza também didática da ferramenta desenvolvida, o feedback de alunos a respeito de sua
-  utilização pode no futuro apontar para melhorias de layout que tornem a plataforma mais intuitiva.
-\printbibliography
+\chapter{Conclusão}
+  Devido à dificuldade de visualização no aprendizado de processamento de sinais, imposta pelo elevado grau de
+  abstração envolvido no formalismo matemático da teoria abrangida, foi desenvolvido neste trabalho uma
+  ferramenta capaz de realizar o projeto de filtros digitais segundo métodos clássicos da literatura.
+  A plataforma construída contempla filtros FIR utilizando os métodos Least Squares e o algoritmo de Remez,
+  sendo também tratados os clássicos filtros IIR de Butterworth, Chebyshev I e II, Cauer e Bessel. A aplicação é
+  também capaz de fornecer diversos gráficos com intuito de permitir a visualização das principais
+  características dos filtros projetados, como sua resposta em frequência, a localização de seus polos e zeros
+  no plano complexo e sua resposta ao impulso. Por fim, tem-se ainda a funcionalidade de exportar o filtro
+  construído para um arquivo em formato \texttt{.pickle} para a utilização em outras aplicações Python.
+
+  Com a possibilidade de realizar o projeto de filtros digitais por meio de interface gráfica com o usuário,
+  a plataforma desenvolvida cumpre com o objetivo de tornar o processo mais prático para o projetista de filtros,
+  bem como capacita ao aluno com uma ferramenta alternativa durante o aprendizado do tópico de processamento de
+  sinais.
+
+\section{Trabalhos futuros}
+  Possíveis melhorias foram identificadas para trabalhos futuros, tais quais:
+
+  \begin{itemize}
+    \item funcionalidade para permitir a filtragem de sinais diretamente pela plataforma;
+    \item adição de outros formatos de exportação (\texttt{.json}, \texttt{.csv}, \texttt{.mat}, etc);
+    \item implementação de especificações mais complexas para filtros FIR, como filtros de Hilbert e até mesmo
+      filtros multibandas;
+    \item possibilidade de edição dos polos e zeros do filtro graficamente;
+    \item processamento em tempo real de sinais captados via interface serial com o filtro projetado.
+  \end{itemize}
+
+  Ainda, devido a natureza também didática da ferramenta desenvolvida, o \textit{feedback} de alunos a respeito
+  de sua utilização pode no futuro apontar para melhorias de \textit{layout} que tornem a plataforma mais
+  intuitiva.
+
+\printbibliography[heading=bibnumbered]
 \end{document}
