@@ -296,6 +296,18 @@ Orientador(a)\\[2.41cm]
     \caption*{Fonte: Autoria própria}
   \end{figure}
 
+  Para discretizar um sinal adequadamente, sem perda de informação e sem gerar distorção (\textit{aliasing}), o
+  teorema da amostragem de Nyquist-Shannon \cite{lathi} afirma que a amostragem deve ser feita a uma taxa $f_s$
+  superior ao dobro da maior frequência no espectro do sinal $f_m$, ou seja
+  \begin{equation}
+    f_s > 2 f_m
+  \end{equation}
+
+  De forma equivalente, no domínio do tempo, tem-se que o período de amostragem $T_s$ deve ser
+  \begin{equation}
+    T_s  < \frac{1}{2 f_m}
+  \end{equation}
+
   Dentre os sinais existentes, o impulso unitário ou delta de Dirac, é um dos mais importantes. Este sinal é
   definido, no caso contínuo, como:
   \begin{equation}
@@ -857,7 +869,7 @@ Orientador(a)\\[2.41cm]
 
   Com a possibilidade de realizar o projeto de filtros digitais por meio de interface gráfica com o usuário,
   a plataforma desenvolvida cumpre com o objetivo de tornar o processo mais prático para o projetista de filtros,
-  bem como capacita ao aluno com uma ferramenta alternativa durante o aprendizado do tópico de processamento de
+  bem como capacita o aluno com uma ferramenta alternativa durante o aprendizado do tópico de processamento de
   sinais.
 
 \section{Trabalhos futuros}
