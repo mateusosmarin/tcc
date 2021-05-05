@@ -32,6 +32,6 @@ frequency_units = {
 
 amplitude_units = {
     'dB': lambda x: x,
-    'V': lambda x: 10 * math.log(x, 10),
-    'W': lambda x: 20 * math.log(x, 10),
+    'V': lambda x: 20 * math.log(x, 10),
+    'W': lambda x: 10 * math.log(x, 10),
 }

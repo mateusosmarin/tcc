@@ -24,7 +24,7 @@ def sinc(t):
     return np.sin(np.pi * t) / (np.pi * t) if t != 0 else 1
 
 
-N = 1000
+N = 100
 
 t = np.linspace(-1, 1, N)
 x = rect(t, 1)

@@ -4,6 +4,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 import numpy as np
+from scipy import signal
 from matplotlib.backends.backend_gtk3 import \
     NavigationToolbar2GTK3 as NavigationToolbar
 from matplotlib.backends.backend_gtk3agg import \
@@ -40,16 +41,21 @@ class FilterView(Gtk.VBox):
         self.update()
 
     def update(self):
-        w, mag, phase = self.system.bode()
+        tf = self.system.to_tf()
+        fs = 1 / tf.dt
+
+        f, h = signal.freqz(tf.num, tf.den, fs=fs)
+        mag = 20 * np.log10(np.abs(h))
+        phase = np.degrees(np.unwrap(np.angle(h)))
 
         self.amplitude_ax.clear()
-        self.amplitude_ax.plot(w / (2 * np.pi), mag)
+        self.amplitude_ax.plot(f, mag)
         self.amplitude_ax.set_xlabel('f [Hz]')
         self.amplitude_ax.set_ylabel(r'$|H(e^{j 2 \pi f})|^2$ [dB]')
         self.amplitude_ax.grid(True)
 
         self.phase_ax.clear()
-        self.phase_ax.plot(w / (2 * np.pi), phase)
+        self.phase_ax.plot(f, phase)
         self.phase_ax.set_xlabel('f [Hz]')
         self.phase_ax.set_ylabel(r'$\phi(e^{j 2 \pi f})$ [deg]')
         self.phase_ax.grid(True)
@@ -66,9 +72,9 @@ class FilterView(Gtk.VBox):
         self.zpk_ax.grid(True)
         self.zpk_ax.set_aspect(1)
 
-        n, h = self.system.impulse()
+        t, h = self.system.impulse()
         self.impulse_ax.clear()
-        markerlines, stemlines, baseline = self.impulse_ax.stem(n, np.squeeze(h))
+        markerlines, stemlines, baseline = self.impulse_ax.stem(np.squeeze(h))
         markerlines.set_markersize(3)
         stemlines.set_linewidth(1)
         self.impulse_ax.set_xlabel('n [samples]')

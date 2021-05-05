@@ -727,9 +727,13 @@ Orientador(a)\\[2.41cm]
   Com um filtro projetado também é habilitada uma opção para exportação do filtro utilizando Pickle
   \cite{pickle}, que permite serializar um objeto do Python em um arquivo que pode ser posteriormente carregado
   e usado em qualquer aplicação Python. O objeto exportado trata-se de uma instância da classe scipy.signal.dlti
-  \cite{scipy}, o que permite a filtragem de sinais e obtenção das diversas características do filtro, tais como
-  sua função de transferência, resposta em frequência, resposta ao impulso e até mesmo a filtragem de um sinal
-  arbitrário.
+  \cite{scipy}, o que permite a filtragem de sinais e a obtenção das diversas características do filtro, tais
+  como sua função de transferência, resposta em frequência e resposta ao impulso.
+
+  Nas próximas seções serão detalhados cada um dos métodos de projeto de filtros digitais oferecidos pela
+  plataforma, mostrando a forma pela qual as especificações devem ser feitas, bem como os resultados obtidos.
+  Cada filtro projetado será também exportado no formato \texttt{.pickle} e utilizado para efetivamente filtrar
+  alguns sinais sintetizados programaticamente.
 
 \section{Filtros FIR pelo método Least Squares}
   Para desenvolver um filtro passa-baixas com 55 taps (coeficientes) cuja banda passante vai até 8 kHz, tendo
@@ -763,6 +767,12 @@ Orientador(a)\\[2.41cm]
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
+  Pode-se perceber que as características desejadas no filtro foram implementadas com sucesso observando sua resposta
+  em frequência na figura \ref{fig:least_squares_results}. Quanto aos dois tons sintetizados e filtrados, nota-se que
+  o tom de 5 kHz passa praticamente sem sofrer atenuações, enquanto o tom de 10 kHz é reduzido drasticamente. Também
+  é possível notar um atraso na saída do filtro, o que é decorrente do tamanho do mesmo (55 coeficientes), sendo
+  também esperado quando se leva em conta a fase da resposta em frequência, que apresenta uma inclinação elevada.
+
 \section{Filtros FIR pelo algoritmo de Remez}
   Supondo que se deseje projetar um filtro passa-faixa com 55 taps, cuja banda passante vai de 5 kHz a 15 kHz,
   com ganho unitário (0 dB), e bandas rejeitadas com 1 kHz de transição e atenuações de 20 dB (ganho de -20 dB),
@@ -784,7 +794,13 @@ Orientador(a)\\[2.41cm]
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  A aplicação do filtro obtido a tons de 2 kHz, 10 kHz e 18 kHz resulta na figura \ref{fig:remez_tones}.
+  Aqui, fica evidenciado que o filtro projetado está de acordo com as especificações propostas, sendo possível observar
+  uma característica específica do algoritmo de Remez: a amplitude da resposta em frequência apresenta \textit{ripples} 
+  de igual amplitude, motivo pelo qual estes filtros também são conhecidos como filtros \textit{equiripple}.
+
+  A aplicação do filtro obtido a tons de 2 kHz, 10 kHz e 18 kHz resulta na figura \ref{fig:remez_tones}. Para os três
+  tons processados pelo filtro é observada a passagem do tom de 10 kHz, que está dentro da banda passante, enquanto as
+  frequências de 2 kHz e 18 kHz são atenuadas.
   \begin{figure}[H]
     \caption{Aplicação do filtro passa-faixa a três tons}
     \centering
@@ -798,7 +814,7 @@ Orientador(a)\\[2.41cm]
   em relação a resposta desejada bem como de definir a ordem do filtro diretamente. Ao especificar um filtro de
   ordem mínima, será construído um filtro com a mínima ordem necessária para atingir as especificações.
 
-  No caso de um filtro passa-altas Butterworth de ordem 10 com frequência de corte de 8 kHz, a descrição do 
+  No caso de um filtro passa-altas Butterworth de ordem 8 com frequência de corte de 8 kHz, a descrição do 
   filtro seria feita como na figura \ref{fig:butter_specifications}.
   \begin{figure}[H]
     \caption{Especificação de um filtro passa-altas de Butterworth}
@@ -808,7 +824,9 @@ Orientador(a)\\[2.41cm]
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  O filtro projetado apresenta as características exibidas na figura \ref{fig:butter_results}.
+  O filtro projetado apresenta as características exibidas na figura \ref{fig:butter_results}. Como é esperado
+  de um filtro Butterworth, tem-se que a amplitude da resposta em frequência do filtro obtido é extremamente
+  plana na banda de passagem.
   \begin{figure}[H]
     \caption{Resultados do filtro passa-altas de Butterworth}
     \centering
@@ -826,6 +844,12 @@ Orientador(a)\\[2.41cm]
     \label{fig:butter_tones}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
+
+  Neste caso, a grande atenuação proporcionada pelo filtro faz com que o tom de 4 kHz seja praticamente eliminado
+  na saída do mesmo, enquanto o tom de 12 kHz pode passar sem problemas. Vale destacar aqui o pequeno atraso
+  introduzido pelo filtro, em relação aos filtros apresentados até então, devido a fase de sua resposta em
+  frequência ter uma inclinação consideravelmente menor. Isto se dá em grande parte pela diferença no número
+  de coeficientes ou ordem dos filtros considerados.
 
   Já para um filtro rejeita-faixa de ordem mínima cuja banda rejeitada vai de 4 kHz a 8 kHz, com 500 Hz de faixa
   de transição, uma atenuação de 20 dB na banda rejeitada e atenuação máxima de 3 dB na banda passante, as
@@ -847,6 +871,10 @@ Orientador(a)\\[2.41cm]
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
+  É possível observar que as características esperadas pelo filtro de Cauer foram obtidas, sendo respeitadas
+  as atenuações mínima de de 20 dB na banda rejeitada e máxima de 3 dB na banda passante. Nota-se ainda que
+  a atenuação pode atingir valores bastante elevados, alcançando até 70 dB.
+
   Aplicando o filtro desenvolvido a tons de 2 kHz, 6 kHz e 10 kHz, obtém-se a figura \ref{fig:cauer_tones}.
   \begin{figure}[H]
     \caption{Aplicação do filtro rejeita-faixa a três tons}
@@ -855,6 +883,9 @@ Orientador(a)\\[2.41cm]
     \label{fig:cauer_tones}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
+
+  Os tons processados pelo filtro de Cauer mostram bem a atenuação de 3 dB nas frequências de 2 kHz e 10 kHz,
+  resultando em amplitudes de aproximadamente 0.7, enquanto que o tom de 6 kHz foi fortemente atenuado.
   
 \chapter{Conclusão}
   Devido à dificuldade de visualização no aprendizado de processamento de sinais, imposta pelo elevado grau de
