@@ -34,15 +34,17 @@ x = rect(t, 1)
 
 plt.figure()
 markerlines, stemlines, baseline = plt.stem(k, discrete_fourier_transform(x, n, k).real,
-                                            markerfmt='C0o', label=r'$\Re\{X[k]\}$')
+                                            markerfmt='C0o',
+                                            label=r'$\operatorname{Re}\{X[k]\}$')
 markerlines.set_markersize(4)
 stemlines.set_linewidth(1)
 markerlines, stemlines, baseline = plt.stem(k, discrete_fourier_transform(x, n, k).imag,
-                                            markerfmt='C1o', label=r'$\Im\{X[k]\}$')
+                                            markerfmt='C1o',
+                                            label=r'$\operatorname{Im}\{X[k]\}$')
 markerlines.set_markersize(4)
 stemlines.set_linewidth(1)
-plt.xlabel('k [samples]')
-plt.ylabel('X[k]')
+plt.xlabel(r'$k\ [samples]$')
+plt.ylabel(r'$X[k]$')
 plt.grid(True)
 plt.legend()
 plt.show()

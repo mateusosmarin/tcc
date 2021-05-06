@@ -8,7 +8,7 @@ n = t / Ts
 x = np.exp(-n * Ts) * np.sin(2 * np.pi * n * Ts)
 
 plt.stem(n, x)
-plt.xlabel('n [samples]')
-plt.ylabel('x[n]')
+plt.xlabel(r'$n\ [samples]$')
+plt.ylabel(r'$x[n]$')
 plt.grid(True)
 plt.show()

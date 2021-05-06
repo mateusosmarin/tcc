@@ -9,8 +9,8 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
-\graphicspath{ {images/} }
-\usepackage[backend=biber]{biblatex}
+\graphicspath{{images/}}
+\usepackage[backend=biber,sorting=none]{biblatex}
 \usepackage{csquotes}
 \addbibresource{bibliography.bib}
 \usepackage{caption}
@@ -32,9 +32,38 @@
 \usepackage{ragged2e}
 \usepackage{setspace} 
 \usepackage{epigraph}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{lastpage}
 
 \newcommand{\I}{{\mathrm{i}\mkern1mu}}
 \newcommand{\euler}{{\mathrm{e}\mkern1mu}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=t,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \title{Desenvolvimento de uma plataforma interativa de processamento de sinais}
 \author{Mateus Fuga Osmarin}
@@ -108,7 +137,7 @@
 
 {
   \center
-  Orientador: Prof. Dr. Rafael Krummenauer\\[2.978cm]
+  Orientador: Prof. Rafael Krummenauer\\[2.978cm]
 
   {
     \bf
@@ -148,8 +177,16 @@ MATEUS FUGA OSMARIN\\[1.86cm]
 
 
 \rule [0cm]{10cm}{0.1pt}\\
-Prof. Dr. Rafael Krummenauer\\
-Orientador(a)\\[2.41cm]
+Prof. Rafael Krummenauer\\
+Orientador\\[2.41cm]
+
+\rule [0cm]{10cm}{0.1pt}\\
+Prof. Abel Fidalgo Alves\\
+Membro titular\\[2.41cm]
+
+\rule [0cm]{10cm}{0.1pt}\\
+Emilio Soitsi Zukeram Júnior\\
+Membro titular\\[2.41cm]
 
 \thispagestyle{empty}
 \clearpage
@@ -192,11 +229,15 @@ Orientador(a)\\[2.41cm]
 
 \pdfbookmark[1]{RESUMO}{RESUMO}
 \begin{abstract}
+  OSMARIN, Mateus F. \textbf{Desenvolvimento de uma Plataforma Interativa de Processamento de Sinais}. 2021.
+  \pageref{LastPage} f. Trabalho de Conclusão de Curso (Graduação) -- Engenharia Elétrica. Universidade Estadual
+  de Maringá. Maringá, 2021.\\
+
   Este trabalho trata do desenvolvimento de uma plataforma interativa de processamento de sinais.
   A partir de uma interface gráfica, é possível realizar o projeto de filtros digitais tanto do tipo
   IIR quanto FIR, utilizando técnicas clássicas da literatura. O sistema busca endereçar a dificuldade
   de visualização no aprendizado do tópico de processamento de sinais, fazendo-se uma ferramenta didática
-  alternativa.
+  alternativa.\\
 
   \textbf{Palavras-chave}: Processamento de sinais. Projeto de filtros digitais. Visualização. Python.
 \end{abstract}
@@ -204,10 +245,13 @@ Orientador(a)\\[2.41cm]
 \pdfbookmark[1]{ABSTRACT}{ABSTRACT}
 \begin{otherlanguage}{english}
   \begin{abstract}
+    OSMARIN, Mateus F. \textbf{Development of a Signal Processing Interactive Platform}. 2021. \pageref{LastPage} p.
+    Undergraduate thesis - Electrical Engeneering. Universidade Estadual de Maringá. Maringá, 2021.\\
+
     This paper addresses the development of an interactive signal processing platform. By means of a graphical
     user interface, it is possible to design both IIR and FIR filters, using classic techniques. The system
     aims to deal with the visualization issues in the learning of signal processing topic, being an alternative
-    didatic tool.
+    didatic tool.\\
 
     \textbf{Keywords}: Signal processing. Digital filter design. Visualization. Python.
   \end{abstract}
@@ -314,14 +358,14 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 
   Para discretizar um sinal adequadamente, sem perda de informação e sem gerar distorção (\textit{aliasing}), o
   teorema da amostragem de Nyquist-Shannon \cite{lathi} afirma que a amostragem deve ser feita a uma taxa $f_s$
-  superior ao dobro da maior frequência no espectro do sinal $f_m$, ou seja
+  com pelo menos o dobro da maior frequência no espectro do sinal $f_m$, ou seja
   \begin{equation}
-    f_s > 2 f_m
+    f_s \geq 2 f_m
   \end{equation}
 
   De forma equivalente, no domínio do tempo, tem-se que o período de amostragem $T_s$ deve ser
   \begin{equation}
-    T_s  < \frac{1}{2 f_m}
+    T_s  \leq \frac{1}{2 f_m}
   \end{equation}
 
   Dentre os sinais existentes, o impulso unitário ou delta de Dirac, é um dos mais importantes. Este sinal é
@@ -685,21 +729,21 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 
   O programa foi estruturado na seguinte hierarquia:
   \begin{itemize}
-    \item \texttt{main.py}, é o módulo principal responsável por montar toda a aplicação,
+    \item \texttt{main.py}, é o módulo principal responsável por montar toda a aplicação;
     \item \texttt{fdatool/utils.py}, apresenta utilitários para conversão entre diferentes unidades de medida de
       frequência (Hz, kHz, MHz e GHz) e amplitude (dB, V e W), bem como uma classe representado eventos que podem
-      ocorrer durante a execução do programa, permitindo o registro de callbacks,
+      ocorrer durante a execução do programa, permitindo o registro de callbacks;
     \item \texttt{fdatool/widgets/inputs.py}, constrói os componentes de entrada de dados da aplicação,
-      adicionando controle de estado aos mesmos,
-    \item \texttt{fdatool/widgets/specs.py}, trata dos componentes de especificações de frequência e amplitude,
+      adicionando controle de estado aos mesmos;
+    \item \texttt{fdatool/widgets/specs.py}, trata dos componentes de especificações de frequência e amplitude;
     \item \texttt{fdatool/widgets/common.py}, contém componentes gŕaficos recorrentes como botões e componente
-      para seleção de ordem dos filtros,
-    \item \texttt{fdatool/widgets/figures.py}, onde são construídos os gráficos da aplicação,
+      para seleção de ordem dos filtros;
+    \item \texttt{fdatool/widgets/figures.py}, onde são construídos os gráficos da aplicação;
     \item \texttt{fdatool/filters/firls.py}, este módulo implementa os filtros FIR utilizando o método Least
-      Squares,
-    \item \texttt{fdatool/filters/remez.py}, cuja função é o projeto de filtros FIR pelo algoritmo de Remez,
-    \item \texttt{fdatool/filters/iir.py}, contém os filtros clássicos que são discretizados pela transformação
-      bilinear,
+      Squares;
+    \item \texttt{fdatool/filters/remez.py}, cuja função é o projeto de filtros FIR pelo algoritmo de Remez;
+    \item \texttt{fdatool/filters/iir.py}, contém os filtros IIR clássicos que são discretizados pela
+      transformação bilinear;
     \item \texttt{fdatool/filters/factory.py}, permite a obtenção de um dos métodos de projeto por meio de uma
       fábrica \cite{gang_of_four}.
   \end{itemize}
@@ -742,9 +786,9 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 
   Com um filtro projetado também é habilitada uma opção para exportação do filtro utilizando Pickle
   \cite{pickle}, que permite serializar um objeto do Python em um arquivo que pode ser posteriormente carregado
-  e usado em qualquer aplicação Python. O objeto exportado trata-se de uma instância da classe scipy.signal.dlti
-  \cite{scipy}, o que permite a filtragem de sinais e a obtenção das diversas características do filtro, tais
-  como sua função de transferência, resposta em frequência e resposta ao impulso.
+  e usado em qualquer aplicação Python. O objeto exportado trata-se de uma instância da classe
+  \texttt{scipy.signal.dlti} \cite{scipy}, o que permite a filtragem de sinais e a obtenção das diversas
+  características do filtro, tais como sua função de transferência, resposta em frequência e resposta ao impulso.
 
   Nas próximas seções serão detalhados cada um dos métodos de projeto de filtros digitais oferecidos pela
   plataforma, mostrando a forma pela qual as especificações devem ser feitas, bem como os resultados obtidos.
@@ -907,7 +951,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   Devido à dificuldade de visualização no aprendizado de processamento de sinais, imposta pelo elevado grau de
   abstração envolvido no formalismo matemático da teoria abrangida, foi desenvolvido neste trabalho uma
   ferramenta capaz de realizar o projeto de filtros digitais segundo métodos clássicos da literatura.
-  A plataforma construída contempla filtros FIR utilizando os métodos Least Squares e o algoritmo de Remez,
+  A plataforma construída contempla filtros FIR utilizando o método Least Squares e o algoritmo de Remez,
   sendo também tratados os clássicos filtros IIR de Butterworth, Chebyshev I e II, Cauer e Bessel. A aplicação é
   também capaz de fornecer diversos gráficos com intuito de permitir a visualização das principais
   características dos filtros projetados, como sua resposta em frequência, a localização de seus polos e zeros
@@ -936,4 +980,8 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   intuitiva.
 
 \printbibliography[heading=bibnumbered]
+
+\chapter*{Apêndice - Demonstração de uso do filtro exportado}
+\lstinputlisting[language=Python]{filter_demo.py}
+  
 \end{document}

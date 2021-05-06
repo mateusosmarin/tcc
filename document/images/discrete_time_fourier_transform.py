@@ -36,11 +36,11 @@ n = t * N / (t.max() - t.min())
 
 plt.figure()
 plt.plot(f, discrete_time_fourier_transform(x, n, f, T).real,
-         label=r'$\Re\{\widehat{x_T}(f)\}$')
+         label=r'$\operatorname{Re}\{\widehat{x}_T(f)\}$')
 plt.plot(f, discrete_time_fourier_transform(x, n, f, T).imag,
-         label=r'$\Im\{\widehat{x_T}(f)\}$')
-plt.xlabel('f [Hz]')
-plt.ylabel(r'$\widehat{x_T}(f)$')
+         label=r'$\operatorname{Im}\{\widehat{x}_T(f)\}$')
+plt.xlabel(r'$f\ [Hz]$')
+plt.ylabel(r'$\widehat{x}_T(f)$')
 plt.grid(True)
 plt.legend()
 plt.show()

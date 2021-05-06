@@ -50,14 +50,14 @@ class FilterView(Gtk.VBox):
 
         self.amplitude_ax.clear()
         self.amplitude_ax.plot(f, mag)
-        self.amplitude_ax.set_xlabel('f [Hz]')
-        self.amplitude_ax.set_ylabel(r'$|H(e^{j 2 \pi f})|^2$ [dB]')
+        self.amplitude_ax.set_xlabel(r'$f\ [Hz]$')
+        self.amplitude_ax.set_ylabel(r'$|H(e^{\mathrm{i} 2 \pi f})|^2\ [dB]$')
         self.amplitude_ax.grid(True)
 
         self.phase_ax.clear()
         self.phase_ax.plot(f, phase)
-        self.phase_ax.set_xlabel('f [Hz]')
-        self.phase_ax.set_ylabel(r'$\phi(e^{j 2 \pi f})$ [deg]')
+        self.phase_ax.set_xlabel(r'$f\ [Hz]$')
+        self.phase_ax.set_ylabel(r'$\angle{H(e^{\mathrm{i} 2 \pi f})}\ [deg]$')
         self.phase_ax.grid(True)
 
         zpk = self.system.to_zpk()
@@ -66,8 +66,8 @@ class FilterView(Gtk.VBox):
             zpk.zeros), marker='o', label='Zeros')
         self.zpk_ax.scatter(np.real(zpk.poles), np.imag(
             zpk.poles), marker='x', label='Poles')
-        self.zpk_ax.set_xlabel(r'$Re\{z\}$')
-        self.zpk_ax.set_ylabel(r'$Im\{z\}$')
+        self.zpk_ax.set_xlabel(r'$\operatorname{Re}\{z\}$')
+        self.zpk_ax.set_ylabel(r'$\operatorname{Im}\{z\}$')
         self.zpk_ax.legend()
         self.zpk_ax.grid(True)
         self.zpk_ax.set_aspect(1)
@@ -77,8 +77,8 @@ class FilterView(Gtk.VBox):
         markerlines, stemlines, baseline = self.impulse_ax.stem(np.squeeze(h))
         markerlines.set_markersize(3)
         stemlines.set_linewidth(1)
-        self.impulse_ax.set_xlabel('n [samples]')
-        self.impulse_ax.set_ylabel('h[n] [V]')
+        self.impulse_ax.set_xlabel(r'$n\ [samples]$')
+        self.impulse_ax.set_ylabel(r'$h[n]\ [V]$')
         self.impulse_ax.grid(True)
 
         self.figure.canvas.draw()

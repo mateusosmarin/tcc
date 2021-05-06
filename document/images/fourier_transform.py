@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def fourier_transform(x, t, f):
     dt = (t.max() - t.min()) / t.size
 
@@ -19,6 +20,7 @@ def rect(t, T):
     else:
         return 0
 
+
 N = 1000
 
 t = np.linspace(-1, 1, N)
@@ -26,9 +28,11 @@ x = rect(t, 1)
 
 f = np.linspace(-20, 20, N)
 
-plt.plot(f, fourier_transform(x, t, f).real, label='$\Re\{X(f)\}$')
-plt.plot(f, fourier_transform(x, t, f).imag, label='$\Im\{X(f)\}$')
-plt.xlabel('f [Hz]')
+plt.plot(f, fourier_transform(x, t, f).real,
+         label='$\operatorname{Re}\{X(f)\}$')
+plt.plot(f, fourier_transform(x, t, f).imag,
+         label='$\operatorname{Im}\{X(f)\}$')
+plt.xlabel(r'$f\ [Hz]$')
 plt.ylabel(r'$\mathcal{F}\{x(t)\}(f)$')
 plt.grid(True)
 plt.legend()
