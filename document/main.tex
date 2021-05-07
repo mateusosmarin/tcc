@@ -181,7 +181,7 @@ Prof. Rafael Krummenauer\\
 Orientador\\[2.41cm]
 
 \rule [0cm]{10cm}{0.1pt}\\
-Prof. Abel Fidalgo Alves\\
+Prof. Rubens Zenko Sakiyama\\
 Membro titular\\[2.41cm]
 
 \rule [0cm]{10cm}{0.1pt}\\
@@ -214,7 +214,45 @@ Membro titular\\[2.41cm]
 
 \justifying
 
+Agradeço especialmente ao meu orientador, Prof. Rafael Krummenauer, que muito me inspirou durante todo o curso,
+como professor, como profissional, como pessoa e como amigo. Agradeço a todos os professores que me ensinaram,
+guiaram e me trouxeram até aqui. O tempo é o nosso recurso mais valioso, e vocês o usam para mudar as vidas
+das pessoas que tocam. Agradeço também ao Prof. Rubens pelas aulas valiosas e muito bem humoradas, e ao amigo
+Emilio por aceitar fazer parte desse momento.
 
+Agradeço aos amigos que me acompanharam nesse trajetória, em especial ao Alan, Alex, Marlon e Rodolpho, por
+todo conhecimento compartilhado, todo companheirismo e todos os momentos que vivemos juntos.
+
+Agradeço à minha namorada, Fernanda, pelo amor, compreensão, todas as comidas gostosas e toda ajuda em organizar
+minha cabeça quando tudo parecia perdido.
+
+Agradeço ao Fernando, por toda sabedoria, todas as conversas e discussões existenciais. Você é uma inspiração
+para mim e muito de mim vem de você. Agradeço também à Thalyta pela disponibilidade e toda ajuda na revisão da
+monografia.
+
+Agradeço aos meus amigos Gustavinho, Paula e Rebeca, que mesmo distantes se fazem presentes e me dão forças
+para continuar. Agradeço à Larissa e ao Maicon pelo companheirismo, pelas risadas e todos os strogonoffs de
+queijo.
+
+Agradeço à Lidi por toda a ajuda na busca por entender melhor por que e quem eu sou.
+
+Agradeço ao meu irmão André e sua esposa Natália, pelo apoio, carinho e todos os momentos, até mesmo os
+difíceis. Vocês são muito importantes para mim.
+
+Agradeço à minha irmãzinha Mariana, que me dá luz, esperança e me mantém são sempre que preciso. Você é um
+presente na vida de toda a família.
+
+Agradeço à Kaum e a Luluzinha, por todos os momentos divertidos e ensinamentos passados.
+
+Agradeço à Vó Bete por todo amor, toda força, todas as séries e todos os açaís. Você é uma companheira para a
+vida, e não sei o que seria sem você.
+
+Agradeço aos meus pais, por todo trabalho e amor incondicional, e por me darem a oportunidade de chegar até
+aqui. Em especial, agradeço à minha mãe por estar sempre ao meu lado, mesmo quando parecemos estar em fusos
+horários diferentes. Você é uma verdadeira amiga e uma mãe incrível.
+
+Enfim, agradeço a todos que fizeram parte da minha vida (todos mesmo), pois são todos um pedaço da minha
+história e me tornaram a pessoa que eu sou.
 
 \thispagestyle{empty}
 \clearpage
@@ -223,6 +261,8 @@ Membro titular\\[2.41cm]
 \begin{minipage}{0.49\linewidth}
   \includegraphics[scale=0.01]{images/branco} 
 \end{minipage}\\[18cm]
+
+\epigraph{Tudo muda, mas nada realmente se perde.}{Neil Gaiman}
 
 \thispagestyle{empty}
 \clearpage
@@ -235,9 +275,11 @@ Membro titular\\[2.41cm]
 
   Este trabalho trata do desenvolvimento de uma plataforma interativa de processamento de sinais.
   A partir de uma interface gráfica, é possível realizar o projeto de filtros digitais tanto do tipo
-  IIR quanto FIR, utilizando técnicas clássicas da literatura. O sistema busca endereçar a dificuldade
+  IIR quanto FIR, utilizando técnicas clássicas da literatura tais quais o método Least Squares e o algoritmo de
+  Remez, bem como os filtros de Butterworth, Chebyshev, Cauer e Bessel. O sistema busca endereçar a dificuldade
   de visualização no aprendizado do tópico de processamento de sinais, fazendo-se uma ferramenta didática
-  alternativa.\\
+  alternativa. A plataforma construída constitui-se de um software livre que conta com uma interface gráfica
+  amigável para o projeto de filtros digitais.\\
 
   \textbf{Palavras-chave}: Processamento de sinais. Projeto de filtros digitais. Visualização. Python.
 \end{abstract}
@@ -245,13 +287,16 @@ Membro titular\\[2.41cm]
 \pdfbookmark[1]{ABSTRACT}{ABSTRACT}
 \begin{otherlanguage}{english}
   \begin{abstract}
-    OSMARIN, Mateus F. \textbf{Development of a Signal Processing Interactive Platform}. 2021. \pageref{LastPage} p.
-    Undergraduate thesis - Electrical Engeneering. Universidade Estadual de Maringá. Maringá, 2021.\\
+    OSMARIN, Mateus F. \textbf{Development of a Signal Processing Interactive Platform}. 2021.
+    \pageref{LastPage} p. Undergraduate thesis - Electrical Engeneering. Universidade Estadual de Maringá.
+    Maringá, 2021.\\
 
     This paper addresses the development of an interactive signal processing platform. By means of a graphical
-    user interface, it is possible to design both IIR and FIR filters, using classic techniques. The system
-    aims to deal with the visualization issues in the learning of signal processing topic, being an alternative
-    didatic tool.\\
+    user interface, it is possible to design both IIR and FIR filters, using classic techniques such as the Least
+    Squares method and the Remez Exchange algorithm, as well as the well known Butterworth, Chebyshev, Cauer and
+    Bessel filters. The system aims to deal with the visualization issues in the learning of the signal
+    processing topic, being an alternative didatic tool. The built platform is an open-source software bringing
+    a friendly graphical user interface to the design of digital filters.\\
 
     \textbf{Keywords}: Signal processing. Digital filter design. Visualization. Python.
   \end{abstract}
@@ -280,60 +325,61 @@ Membro titular\\[2.41cm]
 \chapter{Introdução}
   A disciplina de processamento de sinais é uma área ampla que permite entender e tratar matematicamente
   sinais, transformando-os segundo as necessidades envolvidas na sua aplicação. Majoritariamente, encontra-se
-  no dia-a-dia sinais de natureza contínua no tempo, como a temperatura de um corpo, o som de um instrumento
-  musical ou a velocidade de um automóvel. Ainda, existem sinais de natureza inerentemente discreta no tempo,
-  como é o caso do preço de uma ação, as temperaturas máxima e mínima diárias de uma cidade ou o número diário
-  de novos casos de COVID-19. Entretanto, é importante ressaltar que mesmo sinais de natureza contínua  podem
-  ser tratados de forma discreta por meio de procedimentos de amostragem adequados. Dessa forma, o processamento
-  digital de sinais pode ser aplicado a uma infinidade de casos.
+  no dia-a-dia sinais contínuos no tempo, como a temperatura de um corpo, o som de um instrumento musical ou a
+  velocidade de um automóvel. Ainda, existem sinais de natureza inerentemente discreta no tempo, como é o caso
+  do preço de uma ação, as temperaturas máxima e mínima diárias de uma cidade ou o número diário de novos casos
+  de COVID-19. Entretanto, é importante ressaltar que mesmo sinais contínuos podem ser tratados de forma discreta
+  por meio de procedimentos de amostragem adequados. Dessa forma, o processamento digital de sinais pode ser
+  aplicado a uma infinidade de casos.
 
   Diante da generalidade envolvida, tem-se também um nível de abstração elevado no formalismo matemático que
   fundamenta a disciplina, o que resulta em dificuldades no aprendizado dessa importante área. Nesse sentido,
-  a utilização de ferramentas como o Filter Designer do MATLAB traz benefícios tanto de produtividade para
-  profissionais da área como facilitam o aprendizado para estudantes do tópico, por abordar de forma visual e
-  intuitiva o projeto de filtros digitais. Utilizando esse tipo de ferramenta, pode-se variar parâmetros de
-  projeto e visualizar o comportamento dos sistemas projetados de forma eficiente e facilitada, com gráficos que
-  exibem as principais características do processo. Contudo, o MATLAB se trata de um software pago e, não
-  obstante, tem-se observado um aumento crescente no interesse pela linguagem de programação Python por
-  estudantes e profissionais da área da ciência e tecnologia, dada a grande quantidade de bibliotecas disponíveis
-  para todo tipo de problemas.
+  a utilização de ferramentas como o Filter Designer do MATLAB\textsuperscript{\textregistered} traz benefícios
+  tanto de produtividade para profissionais da área como facilitam o aprendizado para estudantes do tópico, por
+  abordar de forma visual e intuitiva o projeto de filtros digitais. Utilizando esse tipo de ferramenta, pode-se
+  variar parâmetros de projeto e visualizar o comportamento dos sistemas projetados de forma eficiente e
+  facilitada, com gráficos que exibem as principais características do processo. Contudo, o
+  MATLAB\textsuperscript{\textregistered} se trata de um software pago e, não obstante, tem-se observado um
+  aumento crescente no interesse pela linguagem de programação Python por estudantes e profissionais da área
+  da ciência e tecnologia, dada a grande quantidade de bibliotecas disponíveis para todo tipo de problemas.
 
 \chapter{Objetivos}
 \section{Objetivos gerais}
-  O presente trabalho tem como objetivo o desenvolvimento de um software livre para projeto de filtros digitais
+  O presente trabalho tem como objetivo desenvolver um software livre para o projeto de filtros digitais
   utilizando a linguagem de programação Python, construindo uma interface gráfica amigável em GTK para aumento
   de produtividade e facilitar o aprendizado na área de processamento de sinais, contando com uma revisão de
   conceitos importantes a servir como referência para utilização do sistema.
 
 \section{Objetivos específicos}
-Os objetivos específicos deste trabalho consistem no desenvolvimento de uma aplicação com interface gráfica que
+  Para alcançar o objetivo geral do trabalho, são propostos os seguintes objetivos específicos:
   \begin{itemize}
-    \item possibilite projetar filtros FIR e IIR utilizando técnicas clássicas da literatura;
-    \item permita visualizar as principais características dos filtros projetados, como resposta em frequência
-      (amplitude e fase), localização de polos e zeros no plano complexo e resposta ao impulso;
-    \item tenha a opção de exportar o filtro projetado para que seja possível utilizá-lo externamente.
+    \item possibilitar o projeto de filtros FIR e IIR utilizando técnicas clássicas da literatura (Least Squares,
+      algoritmo de Remez e filtros de Butterworth, Chebyshev, Cauer e Bessel por meio da transformação bilinear);
+    \item permitir a visualização das principais características dos filtros projetados, como resposta em
+      frequência (amplitude e fase), localização de polos e zeros no plano complexo e resposta ao impulso;
+    \item fornecer a opção de exportar o filtro projetado para que seja possível utilizá-lo externamente.
   \end{itemize}
 
 \chapter{Referenciais teóricos}
 \section{Sinais}
   Em essência, um sinal é algo que contém alguma informação, geralmente sobre o estado de um sistema físico
-  \cite{oppenheim}. Podemos definir matematicamente um sinal como sendo uma função, de uma ou mais variáveis
+  \cite{oppenheim}. Um sinal pode ser definido matematicamente como uma função de uma ou mais variáveis
   independentes. A natureza dessas variáveis é diversa, sendo o tempo e o espaço as mais usuais. O som é um
-  exemplo de sinal temporal, enquanto a temperatura em uma sala ao longo do dia se refere a um sinal espacial e
-  temporal. No decorrer deste trabalho, serão considerados sinais de uma variável, sendo tomada como temporal
-  por convenção, mas a teoria é igualmente válida para outros domínios.
+  exemplo de sinal temporal, enquanto a temperatura em uma sala ao longo do dia se refere a um sinal que é,
+  ao mesmo tempo, espacial e temporal. No decorrer deste trabalho serão considerados sinais de uma variável
+  temporal, mas a teoria é igualmente válida para outros domínios.
 
-  Um sinal contínuo no tempo é definido como sendo uma função do tempo definida para todos os instantes:
+  Um sinal contínuo no tempo é definido como sendo uma função do tempo definida para todos os instantes,
   \begin{equation}
     x = x(t), t \in \mathbb{R}
   \end{equation}
-  A figura \ref{fig:continuous} mostra um exemplo de sinal contínuo no tempo.
+  A Figura \ref{fig:continuous} mostra um exemplo de sinal contínuo no tempo.
   \begin{figure}[H]
-    \caption{Sinal contínuo no tempo}
+    \caption{Sinal contínuo no tempo.}
     \centering
     \includegraphics[width=0.75\textwidth]{continuous}
     \label{fig:continuous}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
   Um sinal discreto no tempo, por outro lado, é definido como uma sequência numérica:
@@ -341,34 +387,34 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
     x = x[n], n \in \mathbb{Z}
   \end{equation}
 
-  Para tratar discretamente sinais contínuos no tempo, pode-se amostrar o sinal contínuo em intervalos de tempo
-  igualmente espaçados:
+  Para tratar discretamente sinais contínuos no tempo pode-se amostrar o sinal em intervalos de tempo igualmente
+  espaçados:
   \begin{equation}
     x_d[n] = x_a(n T_s)
   \end{equation}
   onde $x_d$ é a versão discretizada do sinal analógico $x_a$ e $T_s$ representa o período de amostragem.
-  A figura \ref{fig:discrete} mostra o sinal da figura \ref{fig:continuous} discretizado.
+  A Figura \ref{fig:discrete} apresenta o sinal da Figura \ref{fig:continuous} discretizado.
   \begin{figure}[H]
-    \caption{Sinal discreto no tempo}
+    \caption{Sinal discreto no tempo.}
     \centering
     \includegraphics[width=0.75\textwidth]{discrete}
     \label{fig:discrete}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
   Para discretizar um sinal adequadamente, sem perda de informação e sem gerar distorção (\textit{aliasing}), o
   teorema da amostragem de Nyquist-Shannon \cite{lathi} afirma que a amostragem deve ser feita a uma taxa $f_s$
-  com pelo menos o dobro da maior frequência no espectro do sinal $f_m$, ou seja
+  com pelo menos o dobro da maior frequência no espectro do sinal $f_m$, ou seja,
   \begin{equation}
     f_s \geq 2 f_m
   \end{equation}
 
-  De forma equivalente, no domínio do tempo, tem-se que o período de amostragem $T_s$ deve ser
+  De forma equivalente, no domínio do tempo tem-se que o período de amostragem $T_s$ deve ser:
   \begin{equation}
     T_s  \leq \frac{1}{2 f_m}
   \end{equation}
 
-  Dentre os sinais existentes, o impulso unitário ou delta de Dirac, é um dos mais importantes. Este sinal é
+  Dentre os sinais existentes, o impulso unitário ou delta de Dirac é um dos mais importantes. Este sinal é
   definido, no caso contínuo, como:
   \begin{equation}
     \delta(t) =
@@ -380,7 +426,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
       \end{array}
       \right.
   \end{equation}
-  satisfazendo a restrição
+  satisfazendo a restrição:
   \begin{equation}
     \int_{-\infty}^{+\infty} \delta(t) dt = 1
   \end{equation}
@@ -409,7 +455,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \end{equation}
 
 \section{Transformadas de Fourier, Laplace e Z}
-  Até aqui, os sinais foram descritos no domínio do tempo. É possível, no entanto, representar sinais no
+  Até aqui, os sinais foram descritos no domínio do tempo. No entanto, é possível representar sinais no
   domínio da frequência através das transformações conhecidas como transformada de Fourier, transformada de
   Laplace e transformada Z. O princípio de partida é a série de Fourier, que possibilita a representação de uma
   função T-periódica como uma série de senos e cossenos ou, equivalentemente, exponenciais complexas.
@@ -422,37 +468,37 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \begin{equation}
     c_n = \frac{1}{T} \int_T x(t) \euler^{-\I \frac{2 \pi}{T} n t} dt
   \end{equation}
-  são os coeficientes da série, e N é teoricamente infinito. A figura \ref{fig:fourier} mostra a expansão
-  em série de Fourier do retângulo unitário para diferentes valores de N.
+  são os coeficientes da série, e N é teoricamente infinito. A expansão em série de Fourier do retângulo unitário
+  para diferentes valores de N é apresentada na Figura \ref{fig:fourier}.
   \begin{figure}[H]
-    \caption{Expansão em série de Fourier do retângulo unitário}
+    \caption{Expansão em série de Fourier do retângulo unitário.}
     \centering
     \includegraphics[width=0.75\textwidth]{fourier_series}
     \label{fig:fourier}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
-  Para funções não-periódicas, generaliza-se a série de Fourier considerando o período como sendo infinito.
+  Para funções não-periódicas generaliza-se a série de Fourier considerando o período como sendo infinito.
   No caso limite, tem-se:
   \begin{equation}
     x(t) = \int_{-\infty}^{+\infty} \widehat{x}(f) \euler^{\I 2 \pi f t} df
   \end{equation}
-  onde
+  sendo:
   \begin{equation}
     \widehat{x}(f) = \mathcal{F}\{x(t)\}(f) = \int_{-\infty}^{+\infty} x(t) \euler^{-\I 2 \pi f t} dt
   \end{equation}
   e $\widehat{x}(f)$ é conhecida como a transformada de Fourier de $x(t)$. Segundo esta definição, $f$ tem
-  unidades de $hertz$. A figura \ref{fig:fourier_transform} mostra a transformada de Fourier do retângulo
-  unitário.
+  unidade de $hertz$. A transformada de Fourier do retângulo unitário é mostrada na Figura
+  \ref{fig:fourier_transform}.
   \begin{figure}[H]
-    \caption{Transformada de Fourier do retângulo unitário}
+    \caption{Transformada de Fourier do retângulo unitário.}
     \centering
     \includegraphics[width=0.75\textwidth]{fourier_transform}
     \label{fig:fourier_transform}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
-  Ao amostrar um sinal com um período de amostragem $T$ por meio de um pente de Dirac
+  Ao amostrar um sinal com um período de amostragem $T$ por meio de um pente de Dirac:
   \begin{equation}
     \begin{split}
       x_T(t) = &\quad x(t) \sum_{n = -\infty}^{+\infty} \delta(t - n T) \\
@@ -461,7 +507,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
     \end{split}
     \label{eq:dirac_comb}
   \end{equation}
-  e aplicar a transformada de Fourier, tem-se
+  e aplicar a transformada de Fourier, tem-se:
   \begin{equation}
     \begin{split}
       \widehat{x}_T(f) = &\quad \int_{-\infty}^{+\infty} \sum_{n = -\infty}^{+\infty}
@@ -477,14 +523,14 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
     x[n] = T \int_{1/T} \widehat{x}_T(f) \euler^{\I 2 \pi f n T} df
   \end{equation}
 
-  A figura \ref{fig:discrete_time_fourier_transform} mostra a transformada de tempo discreto de Fourier do
+  A Figura \ref{fig:discrete_time_fourier_transform} mostra a transformada de tempo discreto de Fourier do
   retângulo unitário.
   \begin{figure}[H]
-    \caption{Transformada de tempo discreto de Fourier do retângulo unitário}
+    \caption{Transformada de tempo discreto de Fourier do retângulo unitário.}
     \centering
     \includegraphics[width=0.75\textwidth]{discrete_time_fourier_transform}
     \label{fig:discrete_time_fourier_transform}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
   Nesse caso, a discretização acontece no domínio do tempo, mas a frequência ainda é contínua. Discretizando a
   transformada de tempo discreto de Fourier para $N$ amostras de um ciclo, obtém-se:
@@ -501,13 +547,13 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
     x[n] = \frac{1}{N} \sum_{k = -\infty}^{+\infty} X[k] \euler^{\I 2 \pi \frac{k}{N} n}
   \end{equation}
   
-  A figura \ref{fig:discrete_fourier_transform} mostra a transformada discreta de Fourier do retângulo unitário.
+  A Figura \ref{fig:discrete_fourier_transform} mostra a transformada discreta de Fourier do retângulo unitário.
   \begin{figure}[H]
-    \caption{Transformada discreta de Fourier do retângulo unitário}
+    \caption{Transformada discreta de Fourier do retângulo unitário.}
     \centering
     \includegraphics[width=0.75\textwidth]{discrete_fourier_transform}
     \label{fig:discrete_fourier_transform}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
   A transformada de Fourier pode ainda ser generalizada ao se considerar uma frequência complexa. O resultado
@@ -515,18 +561,18 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \begin{equation}
     X(s) = \mathcal{L}\{x(t)\}(s) = \int_{-\infty}^{+\infty} x(t) \euler^{-s t} dt
   \end{equation}
-  onde
+  sendo: 
   \begin{equation}
     s = \sigma + \I \omega = \sigma + \I 2 \pi f
   \end{equation}
 
-  A figura \ref{fig:laplace_transform} mostra a transformada de Laplace do retângulo unitário.
+  A Figura \ref{fig:laplace_transform} mostra a transformada de Laplace do retângulo unitário.
   \begin{figure}[H]
-    \caption{Transformada de Laplace do retângulo unitário}
+    \caption{Transformada de Laplace do retângulo unitário.}
     \centering
     \includegraphics[width=0.75\textwidth]{laplace_transform}
     \label{fig:laplace_transform}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
   Nota-se também que a transformada de Laplace pode ser vista como sendo a transformada de Fourier de
@@ -538,7 +584,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   onde $\gamma$ é um número real tal que o caminho de integração esteja na região de convergência de $F(s)$.
 
   Novamente, amostrando um sinal por meio de um pente de Dirac \eqref{eq:dirac_comb} e aplicando
-  a transformada de Laplace, tem-se
+  a transformada de Laplace, tem-se:
   \begin{equation}
     \begin{split}
       X_T(s) = &\quad \int_{-\infty}^{+\infty} \sum_{n = -\infty}^{+\infty} x[n] \delta(t - n T) \euler^{-s t} dt
@@ -571,7 +617,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \end{equation}
   para o caso discreto.
 
-  Uma propriedade importante da convolução é
+  Uma propriedade importante da convolução é:
   \begin{equation}
     \label{eq:continuous_convolution_identity}
     x(t) \ast \delta(t) = \int_{-\infty}^{+\infty} x(\tau) \delta(t - \tau) d\tau = x(t)
@@ -642,7 +688,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   Sistemas que são lineares e invariantes no tempo podem ser tratados matemáticamente de forma generalizada como
   se segue. Sendo $\mathcal{H}\{\cdot\}$ um sistema linear e invariante no tempo, e como, de acordo com as
   equações \ref{eq:continuous_convolution_identity} e \ref{eq:discrete_convolution_identity}, sinais podem ser
-  representados por uma convolução com o impulso unitário, tem-se
+  representados por uma convolução com o impulso unitário, tem-se:
   \begin{equation}
     \label{eq:continuous_system_convolution}
     \begin{split}
@@ -697,11 +743,11 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \begin{equation}
     y[n] = \sum_{k = 0}^{M} b_k x[n - k] - \sum_{k = 1}^{N} a_k y[n - k]
   \end{equation}
-  Aplicando a transformada Z, tem-se
+  Aplicando a transformada Z, tem-se:
   \begin{equation}
     Y(z) = \sum_{k = 0}^{M} b_k X(z) z^{-k} - \sum_{k = 1}^{N} a_k Y(z) z^{-k}
   \end{equation}
-  de onde, ao se rearranjar, obtem-se
+  de onde, ao se rearranjar, obtem-se:
   \begin{equation}
     Y(z) \left( 1 + \sum_{k = 1}^{N} a_k z^{-k} \right) = X(z) \left( \sum_{k = 0}^{M} b_k z^{-k} \right)
   \end{equation}
@@ -757,14 +803,14 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   projeto de alguns filtros utilizando a ferramenta construída. Os filtros terão frequência de amostragem de
   44.1 kHz, frequência típica de áudio digital com qualidade de CD.
 
-  A tela inicial do programa é mostrada na figura \ref{fig:home}. O sistema consiste de duas seções: as
+  A tela inicial do programa é mostrada na Figura \ref{fig:home}. O sistema consiste de duas seções: as
   especificações do filtro a ser projetado e os gráficos que mostram os resultados do processo.
   \begin{figure}[H]
-    \caption{Tela inicial da ferramenta desenvolvida}
+    \caption{Tela inicial da ferramenta desenvolvida.}
     \centering
     \includegraphics[width=\textwidth]{images/home}
     \label{fig:home}
-    \caption*{Fonte: Autoria própria}
+    \caption*{Fonte: Autoria própria.}
   \end{figure}
 
   A utilização do sistema começa pela escolha de um método de projeto, sendo que cada método possui
@@ -798,19 +844,19 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 \section{Filtros FIR pelo método Least Squares}
   Para desenvolver um filtro passa-baixas com 55 taps (coeficientes) cuja banda passante vai até 8 kHz, tendo
   ganho unitário (0 dB), e a banda rejeitada iniciando em 9 kHz, com atenuação de 20 dB (um ganho de -20 dB), a
-  especificação do filtro seria como mostra a figura \ref{fig:least_squares_specifications}.
+  especificação do filtro seria como mostra a Figura \ref{fig:least_squares_specifications}.
   \begin{figure}[H]
-    \caption{Especificação de um filtro passa-baixas usando Least Squares}
+    \caption{Especificação de um filtro passa-baixas usando Least Squares.}
     \centering
     \includegraphics[width=0.4\textwidth]{images/least_squares_specifications}
     \label{fig:least_squares_specifications}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
   
-  Os resultados obtidos para estas especificações podem ser visualizados na figura
+  Os resultados obtidos para estas especificações podem ser visualizados na Figura
   \ref{fig:least_squares_results}
   \begin{figure}[H]
-    \caption{Resultados do filtro passa-baixas utilizando Least Squares}
+    \caption{Resultados do filtro passa-baixas utilizando Least Squares.}
     \centering
     \includegraphics[width=\textwidth]{images/least_squares_results}
     \label{fig:least_squares_results}
@@ -818,51 +864,53 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   \end{figure}
 
   Exportando o filtro e aplicando-o a um tom de 5 kHz e um de 10kHz, pode-se observar o efeito da filtragem na
-  figura \ref{fig:least_squares_tones}.
+  Figura \ref{fig:least_squares_tones}.
   \begin{figure}[H]
-    \caption{Aplicação do filtro passa-baixas a dois tons}
+    \caption{Aplicação do filtro passa-baixas a dois tons.}
     \centering
     \includegraphics[width=\textwidth]{images/least_squares_tones}
     \label{fig:least_squares_tones}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  Pode-se perceber que as características desejadas no filtro foram implementadas com sucesso observando sua resposta
-  em frequência na figura \ref{fig:least_squares_results}. Quanto aos dois tons sintetizados e filtrados, nota-se que
-  o tom de 5 kHz passa praticamente sem sofrer atenuações, enquanto o tom de 10 kHz é reduzido drasticamente. Também
-  é possível notar um atraso na saída do filtro, o que é decorrente do tamanho do mesmo (55 coeficientes), sendo
-  também esperado quando se leva em conta a fase da resposta em frequência, que apresenta uma inclinação elevada.
+  Pode-se perceber que as características desejadas no filtro foram implementadas com sucesso observando sua
+  resposta em frequência na Figura \ref{fig:least_squares_results}. Quanto aos dois tons sintetizados e
+  filtrados, nota-se que o tom de 5 kHz passa praticamente sem sofrer atenuações, enquanto o tom de 10 kHz é
+  reduzido drasticamente. Também é possível notar um atraso na saída do filtro, o que é decorrente do tamanho do
+  mesmo (55 coeficientes), sendo também esperado quando se leva em conta a fase da resposta em frequência, que
+  apresenta uma inclinação elevada.
 
 \section{Filtros FIR pelo algoritmo de Remez}
   Supondo que se deseje projetar um filtro passa-faixa com 55 taps, cuja banda passante vai de 5 kHz a 15 kHz,
   com ganho unitário (0 dB), e bandas rejeitadas com 1 kHz de transição e atenuações de 20 dB (ganho de -20 dB),
-  então a especificação do filtro deve ser feita de acordo com a figura \ref{fig:remez_specifications}.
+  então a especificação do filtro deve ser feita de acordo com a Figura \ref{fig:remez_specifications}.
   \begin{figure}[H]
-    \caption{Especificação de um filtro passa-faixa usando o algoritmo de Remez}
+    \caption{Especificação de um filtro passa-faixa usando o algoritmo de Remez.}
     \centering
     \includegraphics[width=0.4\textwidth]{images/remez_specifications}
     \label{fig:remez_specifications}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  Para este filtro, os resultados obtidos podem ser vistos na figura \ref{fig:remez_results}.
+  Para este filtro, os resultados obtidos podem ser vistos na Figura \ref{fig:remez_results}.
   \begin{figure}[H]
-    \caption{Resultados do filtro passa-faixa utilizando o algoritmo de Remez}
+    \caption{Resultados do filtro passa-faixa utilizando o algoritmo de Remez.}
     \centering
     \includegraphics[width=\textwidth]{images/remez_results}
     \label{fig:remez_results}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  Aqui, fica evidenciado que o filtro projetado está de acordo com as especificações propostas, sendo possível observar
-  uma característica específica do algoritmo de Remez: a amplitude da resposta em frequência apresenta \textit{ripples} 
-  de igual amplitude, motivo pelo qual estes filtros também são conhecidos como filtros \textit{equiripple}.
+  Aqui, fica evidenciado que o filtro projetado está de acordo com as especificações propostas, sendo possível
+  observar uma característica específica do algoritmo de Remez: a amplitude da resposta em frequência apresenta
+  \textit{ripples} de igual amplitude, motivo pelo qual estes filtros também são conhecidos como filtros
+  \textit{equiripple}.
 
-  A aplicação do filtro obtido a tons de 2 kHz, 10 kHz e 18 kHz resulta na figura \ref{fig:remez_tones}. Para os três
-  tons processados pelo filtro é observada a passagem do tom de 10 kHz, que está dentro da banda passante, enquanto as
-  frequências de 2 kHz e 18 kHz são atenuadas.
+  A aplicação do filtro obtido a tons de 2 kHz, 10 kHz e 18 kHz resulta na Figura \ref{fig:remez_tones}. Para os
+  três tons processados pelo filtro é observada a passagem do tom de 10 kHz, que está dentro da banda passante,
+  enquanto as frequências de 2 kHz e 18 kHz são atenuadas.
   \begin{figure}[H]
-    \caption{Aplicação do filtro passa-faixa a três tons}
+    \caption{Aplicação do filtro passa-faixa a três tons.}
     \centering
     \includegraphics[width=\textwidth]{images/remez_tones}
     \label{fig:remez_tones}
@@ -875,30 +923,30 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   ordem mínima, será construído um filtro com a mínima ordem necessária para atingir as especificações.
 
   No caso de um filtro passa-altas Butterworth de ordem 8 com frequência de corte de 8 kHz, a descrição do 
-  filtro seria feita como na figura \ref{fig:butter_specifications}.
+  filtro seria feita como na Figura \ref{fig:butter_specifications}.
   \begin{figure}[H]
-    \caption{Especificação de um filtro passa-altas de Butterworth}
+    \caption{Especificação de um filtro passa-altas de Butterworth.}
     \centering
     \includegraphics[width=0.4\textwidth]{images/butter_specifications}
     \label{fig:butter_specifications}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  O filtro projetado apresenta as características exibidas na figura \ref{fig:butter_results}. Como é esperado
+  O filtro projetado apresenta as características exibidas na Figura \ref{fig:butter_results}. Como é esperado
   de um filtro Butterworth, tem-se que a amplitude da resposta em frequência do filtro obtido é extremamente
   plana na banda de passagem.
   \begin{figure}[H]
-    \caption{Resultados do filtro passa-altas de Butterworth}
+    \caption{Resultados do filtro passa-altas de Butterworth.}
     \centering
     \includegraphics[width=\textwidth]{images/butter_results}
     \label{fig:butter_results}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  Utilizando o filtro para processar um tom de 4 kHz e um de 12 kHz, obtem-se os resultados mostrados na figura
+  Utilizando o filtro para processar um tom de 4 kHz e um de 12 kHz, obtem-se os resultados mostrados na Figura
   \ref{fig:butter_tones}.
   \begin{figure}[H]
-    \caption{Aplicação do filtro passa-altas a dois tons}
+    \caption{Aplicação do filtro passa-altas a dois tons.}
     \centering
     \includegraphics[width=\textwidth]{images/butter_tones}
     \label{fig:butter_tones}
@@ -913,18 +961,18 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 
   Já para um filtro rejeita-faixa de ordem mínima cuja banda rejeitada vai de 4 kHz a 8 kHz, com 500 Hz de faixa
   de transição, uma atenuação de 20 dB na banda rejeitada e atenuação máxima de 3 dB na banda passante, as
-  especificações seriam como na figura \ref{fig:cauer_specifications}.
+  especificações seriam como na Figura \ref{fig:cauer_specifications}.
   \begin{figure}[H]
-    \caption{Especificação de um filtro rejeita-faixa de Cauer}
+    \caption{Especificação de um filtro rejeita-faixa de Cauer.}
     \centering
     \includegraphics[width=0.4\textwidth]{images/cauer_specifications}
     \label{fig:cauer_specifications}
     \caption*{Fonte: Autoria Própria}
   \end{figure}
 
-  Os resultados obtidos para este filtro podem ser vistos na figura \ref{fig:cauer_results}.
+  Os resultados obtidos para este filtro podem ser vistos na Figura \ref{fig:cauer_results}.
   \begin{figure}[H]
-    \caption{Resultados do filtro rejeita-faixa de Cauer}
+    \caption{Resultados do filtro rejeita-faixa de Cauer.}
     \centering
     \includegraphics[width=\textwidth]{images/cauer_results}
     \label{fig:cauer_results}
@@ -935,9 +983,9 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   as atenuações mínima de de 20 dB na banda rejeitada e máxima de 3 dB na banda passante. Nota-se ainda que
   a atenuação pode atingir valores bastante elevados, alcançando até 70 dB.
 
-  Aplicando o filtro desenvolvido a tons de 2 kHz, 6 kHz e 10 kHz, obtém-se a figura \ref{fig:cauer_tones}.
+  Aplicando o filtro desenvolvido a tons de 2 kHz, 6 kHz e 10 kHz, obtém-se a Figura \ref{fig:cauer_tones}.
   \begin{figure}[H]
-    \caption{Aplicação do filtro rejeita-faixa a três tons}
+    \caption{Aplicação do filtro rejeita-faixa a três tons.}
     \centering
     \includegraphics[width=\textwidth]{images/cauer_tones}
     \label{fig:cauer_tones}
@@ -948,7 +996,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   resultando em amplitudes de aproximadamente 0.7, enquanto que o tom de 6 kHz foi fortemente atenuado.
   
 \chapter{Conclusão}
-  Devido à dificuldade de visualização no aprendizado de processamento de sinais, imposta pelo elevado grau de
+  Devido à dificuldade de visualização no aprendizado de processamento de sinais imposta pelo elevado grau de
   abstração envolvido no formalismo matemático da teoria abrangida, foi desenvolvido neste trabalho uma
   ferramenta capaz de realizar o projeto de filtros digitais segundo métodos clássicos da literatura.
   A plataforma construída contempla filtros FIR utilizando o método Least Squares e o algoritmo de Remez,
@@ -958,10 +1006,10 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
   no plano complexo e sua resposta ao impulso. Por fim, tem-se ainda a funcionalidade de exportar o filtro
   construído para um arquivo em formato \texttt{.pickle} para a utilização em outras aplicações Python.
 
-  Com a possibilidade de realizar o projeto de filtros digitais por meio de interface gráfica com o usuário,
+  Com a possibilidade de realizar o projeto de filtros digitais por meio de interface gráfica amigável,
   a plataforma desenvolvida cumpre com o objetivo de tornar o processo mais prático para o projetista de filtros,
-  bem como capacita o aluno com uma ferramenta alternativa durante o aprendizado do tópico de processamento de
-  sinais.
+  bem como capacita o aluno com uma ferramenta alternativa e open-source durante o aprendizado do tópico de
+  processamento de sinais.
 
 \section{Trabalhos futuros}
   Possíveis melhorias foram identificadas para trabalhos futuros, tais quais:
@@ -981,7 +1029,7 @@ Os objetivos específicos deste trabalho consistem no desenvolvimento de uma apl
 
 \printbibliography[heading=bibnumbered]
 
-\chapter*{Apêndice - Demonstração de uso do filtro exportado}
+\chapter{Apêndice - Demonstração de uso do filtro exportado}
 \lstinputlisting[language=Python]{filter_demo.py}
   
 \end{document}
